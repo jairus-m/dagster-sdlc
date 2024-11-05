@@ -1,12 +1,19 @@
-import requests
-import dlt
-import time
+import logging
+import sys
 from typing import Generator
+import dlt
+from dlt.sources.helpers import requests
 
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    stream=sys.stdout
+)
+
+logger = logging.getLogger(__name__)
 
 STRAVA_ACTIVITES_URL = dlt.config['strava_pipeline.strava.urls.strava_activites_url']
 STRAVA_AUTH_URL = dlt.config['strava_pipeline.strava.urls.strava_auth_url']
-
 PAYLOAD = {
     'client_id': dlt.secrets['strava_pipeline.strava.credentials.client_id'],
     'client_secret': dlt.secrets['strava_pipeline.strava.credentials.client_secret'],
@@ -24,41 +31,49 @@ def strava_auth(strava_auth_url : dlt.config.value, payload: dict) -> str:
     return res.json()['access_token']
 
 @dlt.resource(table_name="strava_activities", primary_key="id", write_disposition="merge")
-def strava_source(header: dict, strava_activities_url: dlt.config.value) -> Generator:
+def get_activities(
+        header: dict, 
+        strava_activities_url: 
+        dlt.config.value,
+        full_load: bool = False
+        ) -> Generator:
     """
-    Generator that returns json containing 200 activities. 
+    Generator that returns json containing 200 activities per page. 
     """
+    logger.info('Getting activities...')
     page_number = 1
-    while True:
-        param = {'per_page': 200, 'page': page_number}
+    activities_per_page = 50
+    logger.info('activities_per_page=%s, full_load=%s', activities_per_page, full_load)
+    while full_load or page_number == 1:
+        # get the data from page n
+        param = {'per_page': activities_per_page, 'page': page_number}
         response = requests.get(strava_activities_url, headers=header, params=param, timeout=100)
+        data = response.json()
         
-        # Check for rate limiting
-        if response.status_code == 429:
-            print("Rate limit reached. Waiting before next request.")
-            time.sleep(15 * 60)  # Wait for 15 minutes
-            continue
-
-        my_dataset = response.json()
-        
-        if not my_dataset:  # If the response is empty, we've reached the end
+        # break if no data (end)
+        if not data:
             break
         
-        print(f'Yielding Page: {page_number}')
-        yield my_dataset
+        logger.info('Yielding Page: %s', page_number)
+        yield data
+
+        if not full_load:
+            break
         
         page_number += 1
 
-
-
-if __name__ == "__main__":
+@dlt.source
+def strava_source():
     access_token = strava_auth(STRAVA_AUTH_URL, PAYLOAD)
     header = {'Authorization': 'Bearer ' + access_token}
+    return get_activities(header, STRAVA_ACTIVITES_URL, full_load=False)
 
+if __name__ == "__main__":
     pipeline = dlt.pipeline(
         pipeline_name="strava_data", 
         destination="duckdb", 
-        dataset_name="strava_activities")
+        dataset_name="strava_activities"
+    )
 
-    load_info = pipeline.run(strava_source(header, STRAVA_ACTIVITES_URL))
+    load_info = pipeline.run(strava_source())
     print(load_info)
