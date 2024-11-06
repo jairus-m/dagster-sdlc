@@ -1,4 +1,6 @@
 # Work In Progress..
+![Slide1](https://github.com/user-attachments/assets/b12a908f-b3dd-4597-bb28-8ad2ab5b825b)
+
 ## TODO:
 - Learn the dlt library to maximize features such as 
     - Automated schema inference / evolution from raw json
