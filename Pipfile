@@ -8,6 +8,7 @@ dlt = {extras = ["duckdb"], version = "*"}
 streamlit = "*"
 
 [dev-packages]
+ipykernel = "*"
 
 [requires]
 python_version = "3.9"
