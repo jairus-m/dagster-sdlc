@@ -1,3 +1,7 @@
+"""
+This module greates a specific get_activities() resource to extract 
+from the REST API.
+"""
 import logging
 import sys
 from typing import Generator
@@ -70,9 +74,9 @@ def strava_source():
 
 if __name__ == "__main__":
     pipeline = dlt.pipeline(
-        pipeline_name="strava_data", 
+        pipeline_name="strava", 
         destination="duckdb", 
-        dataset_name="strava_activities"
+        dataset_name="activities"
     )
 
     load_info = pipeline.run(strava_source())
