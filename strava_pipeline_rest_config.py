@@ -16,8 +16,6 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-"https://www.strava.com/api/v3/athlete/activities"
-
 CLIENT_ID = dlt.secrets['strava_pipeline.strava.credentials.client_id']
 CLIENT_SECRET = dlt.secrets['strava_pipeline.strava.credentials.client_secret']
 REFRESH_TOEKEN = dlt.secrets['strava_pipeline.strava.credentials.refresh_token']

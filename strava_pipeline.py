@@ -1,5 +1,5 @@
 """
-This module greates a specific get_activities() resource to extract 
+This module creates a specific get_activities() resource to extract 
 from the REST API.
 """
 import logging
