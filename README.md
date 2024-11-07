@@ -1,5 +1,7 @@
 # Work In Progress..
-![Slide1](https://github.com/user-attachments/assets/b12a908f-b3dd-4597-bb28-8ad2ab5b825b)
+![Slide1 2](https://github.com/user-attachments/assets/21c3a611-726b-4857-ac89-29d7ca31239e)
+
+While the short-term goal is to learn these tools, the greater goal is to understand and flesh out what the full development and deployment cycle look like for creating these custom EL pipelines. We have a great process using dbt where we have local development, testing, versioning/branching, CICD, code-review, separation of dev and prod, project structure/cohesion etc., but how can we apply that to the 10-20% of ingestion jobs that cannot be done in a managed tool like Airbyte and/or is best done using a custom solution.
 
 ## TODO:
 - Learn the dlt library to maximize features such as 
@@ -44,17 +46,17 @@
 - All the benefits of having an orchestrator for end-to-end observability, logging, testing, and has a built-in data catalog 
 
 ## Current Status
-- learning the foundations of dlt concepts, configs, classes, and other features by refactoring an old ELT pipeline
-- once i have a better grasp, will move on to migrating to a dagster project and flesh out local dev/testing, project stucture, and deployoment
-- then will introduce a dagster project with multiple dlt pipelines and dependencies
+- Learning the foundations of dlt concepts, configs, classes, and other features by refactoring an old ELT pipeline
+- Once i have a better grasp, will move on to migrating to a dagster project and flesh out local dev/testing, project stucture, and deployoment
+- Then will introduce a dagster project with multiple dlt pipelines and dependencies
 
 ## Outstanding Questions
 - What is the best way to implement logging within a generator?
-  - How to create a standard logging object for use across an entire repository
+  - How to create a standard logging object for use across an entire repository?
 - What does deployment look like for dlt Pipelines?
   - via GitHub actions?
   - via serverless Dagster+?
-- How would a Dagster repo with mulitple pipelines and dependecies be organized?
+- How would a Dagster repo with mulitple pipelines and dependencies be organized?
     - Mulitple code locations?
     - One code location?
     - What is the best structure of the repo?
