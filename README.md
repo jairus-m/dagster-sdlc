@@ -15,7 +15,7 @@ While the short-term goal is to learn these tools, the greater goal is to unders
     - As a force-mulitplier and cost-saver for local development
         - Portable, feature-rich, FAST, and free
 - Learn Dagster
-  - Addresses main problems that we face as an org for EL / dataplatform unification:
+  - Addresses main problems that we face as an org for EL / data platform unification:
     - Fragmented tooling and organization of ingestion jobs 
     - No standard deployment or development process for ingestion jobs that cannot be done via Airbyte/Data shares/etc that need to be written in custom code 
       - No version control, CICD, PR review, collaboration, testing, separate deployment environments, local development, etc 
