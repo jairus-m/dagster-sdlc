@@ -1,0 +1,15 @@
+[project]
+name = "dlt_strava"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "dlt[duckdb]>=1.4.0",
+    "streamlit>=1.40.1",
+]
+
+[tool.uv]
+dev-dependencies = [
+  "ipykernel",
+]
