@@ -1,5 +1,7 @@
 """
-This module uses the RESTAPIConfig class for declarative setup.
+This module uses the RESTAPIConfig and rest_api_resources classes for declarative setup.
+A second module, strava_pipeline, is written without these classes to compare and implement 
+dlt without full declarative configuration.
 """
 import dlt
 from dlt.sources.helpers import requests
@@ -55,15 +57,14 @@ def strava_source(client_id, client_secret, refresh_token):
             {
                 "name": "activities",
                 "endpoint": {
-                    "path": "athlete/activities",
-                    "incremental": {
-                        "start_param": "start",
-                        "cursor_path": "start_date_local",
-                        "initial_value": "2024-11-05 00:00:00+00:00",
-                        "convert": lambda dt_str: int(pendulum.parse(dt_str).timestamp()),
-
-                    }
-                             
+                    "params": {
+                        "after": {
+                            "type": "incremental",
+                            "cursor_path": "start_date_local",
+                            "initial_value": "2010-01-01 00:00:00+00:00",
+                            "convert": lambda dt_str: int(pendulum.parse(dt_str).timestamp()),                        
+                        },
+                    }            
                 },
                 "primary_key": "id",
                 "write_disposition": "merge",

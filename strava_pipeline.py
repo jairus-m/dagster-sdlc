@@ -1,6 +1,7 @@
 """
-This module creates a specific get_activities() resource to extract 
-from the REST API.
+This module creates a specific get_activities() resource with custom logic
+to extracting from Strava's REST API. This is in contrast to strava_pipeline_rest_config
+module where the extraction is purely declarative.
 """
 import logging
 import sys
