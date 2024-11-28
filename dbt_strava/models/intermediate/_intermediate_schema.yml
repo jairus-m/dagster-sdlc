@@ -1,0 +1,114 @@
+version: 2
+
+models:
+  - name: obt_clean_activities
+    description: Clean Strava activities
+    columns:
+      - name: id
+        description: Unique ID for each Strava activity
+        tests:
+          - unique
+          - not_null
+
+      - name: date
+        description: '{{ doc("date") }}'
+        tests:
+          - not_null
+          
+      - name: time
+        description: '{{ doc("time") }}'
+        tests:
+          - not_null
+
+      - name: name
+        description: '{{ doc("name") }}'
+        tests:
+          - not_null
+
+      - name: distance_miles
+        description: '{{ doc("distance_miles") }}'
+        tests:
+          - not_null
+
+      - name: moving_time_minutes
+        description: '{{ doc("moving_time_minutes") }}'
+        tests:
+          - not_null
+
+      - name: elapsed_time_minutes
+        description: '{{ doc("elapsed_time_minutes") }}'
+
+      - name: total_elevation_gain_feet
+        description: '{{ doc("total_elevation_gain_feet") }}'
+
+      - name: sport_type
+        description: '{{ doc("sport_type") }}'
+
+      - name: achievement_count
+        description: '{{ doc("achievement_count") }}'
+
+      - name: kudos_count
+        description: '{{ doc("kudos_count") }}'
+
+      - name: comment_count
+        description: '{{ doc("comment_count") }}'
+
+      - name: athlete_count
+        description: '{{ doc("athlete_count") }}'
+
+      - name: private
+        description: '{{ doc("private") }}'
+
+      - name: visibility
+        description: '{{ doc("visibility") }}'
+
+      - name: average_speed_mph
+        description: '{{ doc("average_speed_mph") }}'
+
+      - name: max_speed_mph
+        description: '{{ doc("max_speed_mph") }}'
+
+      - name: has_heartrate
+        description: '{{ doc("has_heartrate") }}'
+
+      - name: pr_count
+        description: '{{ doc("pr_count") }}'
+
+      - name: has_kudoed
+        description: '{{ doc("has_kudoed") }}'
+        tests:
+          - not_null
+
+      - name: average_cadence
+        description: '{{ doc("average_cadence") }}'
+
+      - name: average_temp
+        description: '{{ doc("average_temp") }}'
+
+      - name: average_watts
+        description: '{{ doc("average_watts") }}'
+
+      - name: max_watts
+        description: '{{ doc("max_watts") }}'
+
+      - name: weighted_average_watts
+        description: '{{ doc("weighted_average_watts") }}'
+
+      - name: kilojoules
+        description: '{{ doc("kilojoules") }}'
+
+      - name: average_heartrate
+        description: '{{ doc("average_heartrate") }}'
+
+      - name: max_heartrate
+        description: '{{ doc("max_heartrate") }}'
+
+      - name: elev_high_feet
+        description: '{{ doc("elev_high_feet") }}'
+
+      - name: elev_low_feet
+        description: '{{ doc("elev_low_feet") }}'
+
+      - name: time_bin
+        description: '{{ doc("time_bin") }}'
+
