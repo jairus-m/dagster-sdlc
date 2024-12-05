@@ -1,0 +1,6 @@
+dbt_strava:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: '../{{ env_var("DUCKDB_DATABASE", "data/staging/strava_pipeline.duckdb") }}'
