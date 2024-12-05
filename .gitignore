@@ -1,3 +1,4 @@
 .dlt
 logs
 .env
+dagster_proj.egg-info
