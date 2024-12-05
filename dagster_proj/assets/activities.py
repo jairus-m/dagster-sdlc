@@ -1,10 +1,13 @@
-from dagster import asset, EnvVar
+from dagster import asset, EnvVar, load_assets_from_modules
+from dagster_dbt import get_asset_key_for_source
 import dlt
 from dlt.sources.helpers import requests
 from dlt.sources.rest_api import RESTAPIConfig, rest_api_resources
 import pendulum
 import logging
 import sys
+
+from .dbt import dbt_analytics
 
 logging.basicConfig(
     level=logging.INFO,
@@ -72,7 +75,7 @@ def strava_source(client_id, client_secret, refresh_token):
 
     yield from rest_api_resources(config)
 
-@asset()
+@asset(key=get_asset_key_for_source([dbt_analytics], "activities_staging"))
 def load_strava_activities():
     pipeline = dlt.pipeline(
         pipeline_name="strava_rest_config", 
