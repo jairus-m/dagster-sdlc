@@ -17,9 +17,10 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-CLIENT_ID = EnvVar("CLIENT_ID")
-CLIENT_SECRET = EnvVar("CLIENT_SECRET")
-REFRESH_TOEKEN = EnvVar("REFRESH_TOKEN")
+CLIENT_ID = EnvVar("CLIENT_ID").get_value()
+CLIENT_SECRET = EnvVar("CLIENT_SECRET").get_value()
+REFRESH_TOEKEN = EnvVar("REFRESH_TOKEN").get_value()
+
 
 def strava_auth(refresh_token, client_id, client_secret):
     """Return the access_token for Authorization bearer"""
@@ -77,9 +78,13 @@ def strava_source(client_id, client_secret, refresh_token):
 
 @asset(key=get_asset_key_for_source([dbt_analytics], "activities_staging"))
 def load_strava_activities():
+    """
+    dlt EL pipeline based off declarative Rest API Config
+    to load raw Strava activities into DuckDB
+    """
     pipeline = dlt.pipeline(
         pipeline_name="strava_rest_config", 
-        destination=dlt.destinations.duckdb(EnvVar("DUCKDB_DATABASE")),
+        destination=dlt.destinations.duckdb(EnvVar("DUCKDB_DATABASE").get_value()),
         dataset_name="activities_rest_config",
         progress="log")
 
