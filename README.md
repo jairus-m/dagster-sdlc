@@ -3,7 +3,31 @@
 
 While the short-term goal is to learn these tools, the greater goal is to understand and flesh out what the full development and deployment cycle look like for creating these custom EL pipelines. We have a great process using dbt where we have local development, testing, versioning/branching, CICD, code-review, separation of dev and prod, project structure/cohesion etc., but how can we apply that to the 10-20% of ingestion jobs that cannot be done in a managed tool like Airbyte and/or is best done using a custom solution.
 
+# Current Status [12/8/24]
+<img width="1512" alt="Screenshot 2024-12-08 at 1 47 03 PM" src="https://github.com/user-attachments/assets/5747ec3d-ca7b-4099-92a9-4d77a1340fef">
+
+- Built a dltHub EL pipeline via the RESTAPIConfig class in `dagster_proj/assets/activities.py`
+  - Declaratively extracts my raw activity data from Strava's REST API and loads it into DuckDB
+- Built a dbt-core project to transform the staged activities data in `analytics_dbt/models`
+- Orchestrated ingest and transformation with Dagster
+  - Developed in dev environment and materaizlied in `dagster dev` server
+  - Configured resources / credentials in .env
+  - Current Dagster folder structure (dependencies managed by UV)
+    - One code location: `dagster_proj/` 
+      - Assets: `dagster_proj/assets/`
+      - Resources: `dagster_proj/resources/__init__.py`
+      - Jobs: `dagster_proj/jobs/__init__.py`
+      - Schedules: `dagster_proj/schedules/__init__.py`
+      - Definitions: `dagster_proj/__init__.py`
+    - The structure is experimental and based on the DagsterU courses
+
 ## TODO:
+- Create job and schedule definitions
+- Seperate dev from prod
+- Deploy to prod environment (branching deployments, testing, CICD, etc)
+- Creata donwstream dependecy from dbt assets (ML model)
+
+## Goals:
 - Learn the dlt library to maximize features such as 
     - Automated schema inference / evolution from raw json
     - Declaratively defining data pipelines
