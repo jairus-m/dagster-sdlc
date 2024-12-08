@@ -11,6 +11,7 @@ dependencies = [
     "dlt[duckdb]>=1.4.0",
     "streamlit>=1.40.1",
     "dagster-duckdb>=0.25.3",
+    "dagster-dbt>=0.25.3",
 ]
 
 [project.optional-dependencies]

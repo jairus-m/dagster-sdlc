@@ -3,4 +3,7 @@ dbt_strava:
   outputs:
     dev:
       type: duckdb
-      path: '../{{ env_var("DUCKDB_DATABASE", "data/staging/strava_pipeline.duckdb") }}'
+      path: '../{{ env_var("DUCKDB_DATABASE", "data/staging/strava.duckdb") }}'
+    local:
+      type: duckdb
+      path: '../data/staging/strava.duckdb'
