@@ -22,8 +22,7 @@ While the short-term goal is to learn these tools, the greater goal is to unders
     - The structure is experimental and based on the DagsterU courses
 
 ## TODO:
-- Create job and schedule definitions
-- Seperate dev from prod
+- Concretely seperate dev from prod
 - Deploy to prod environment (branching deployments, testing, CICD, etc)
 - Creata donwstream dependecy from dbt assets (ML model)
 
