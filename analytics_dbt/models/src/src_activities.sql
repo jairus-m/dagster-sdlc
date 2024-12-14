@@ -1,5 +1,5 @@
 with raw_activities AS (
-    SELECT * FROM {{ source('activities_staging', 'activities') }}   
+    SELECT * FROM {{ source('strava', 'activities') }}   
 )
 
 SELECT *
