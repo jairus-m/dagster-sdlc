@@ -1,28 +1,25 @@
-from dagster import asset, EnvVar, load_assets_from_modules
+from dagster import (
+    asset, 
+    EnvVar, 
+    load_assets_from_modules, 
+    get_dagster_logger,
+    AssetCheckExecutionContext,
+)
 from dagster_dbt import get_asset_key_for_source
 import dlt
 from dlt.sources.helpers import requests
 from dlt.sources.rest_api import RESTAPIConfig, rest_api_resources
 import pendulum
-import logging
 import sys
 
-from .dbt import dbt_analytics
-
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    stream=sys.stdout
-)
-
-logger = logging.getLogger(__name__)
+logger = get_dagster_logger()
 
 CLIENT_ID = EnvVar("CLIENT_ID").get_value()
 CLIENT_SECRET = EnvVar("CLIENT_SECRET").get_value()
 REFRESH_TOEKEN = EnvVar("REFRESH_TOKEN").get_value()
 
 
-def strava_auth(refresh_token, client_id, client_secret):
+def strava_access_token(refresh_token, client_id, client_secret):
     """Return the access_token for Authorization bearer"""
     auth_url = "https://www.strava.com/oauth/token"
     payload = {
@@ -35,11 +32,10 @@ def strava_auth(refresh_token, client_id, client_secret):
     access_token = response.json()['access_token']
     return access_token
 
-@dlt.source
-def strava_source(client_id, client_secret, refresh_token):
+def strava_rest_api_config(client_id, client_secret, refresh_token):
     logger.info("Extracting Strava data source")
-    access_token = strava_auth(refresh_token, client_id, client_secret)
-    
+    access_token = strava_access_token(refresh_token, client_id, client_secret)
+
     config: RESTAPIConfig = {
         "client": {
             "base_url": "https://www.strava.com/api/v3/",
@@ -71,12 +67,12 @@ def strava_source(client_id, client_secret, refresh_token):
             }
         ]
     }
-    
+
     logger.info("RESTAPIConfig set up, starting to yield resources...")
 
     yield from rest_api_resources(config)
 
-@asset(key=get_asset_key_for_source([dbt_analytics], "activities_staging"))
+@asset(key=['strava', 'activities'], group_name='dltHub')
 def load_strava_activities():
     """
     dlt EL pipeline based off declarative Rest API Config
@@ -85,14 +81,14 @@ def load_strava_activities():
     pipeline = dlt.pipeline(
         pipeline_name="strava_rest_config", 
         destination=dlt.destinations.duckdb(EnvVar("DUCKDB_DATABASE").get_value()),
-        dataset_name="activities_rest_config",
+        dataset_name="activities",
         progress="log")
 
-    source = strava_source(
+    source = strava_rest_api_config(
         client_id=CLIENT_ID,
         client_secret=CLIENT_SECRET,
         refresh_token=REFRESH_TOEKEN
     )
 
     load_info = pipeline.run(source)
-    print(load_info)
+    logger.info(load_info)
