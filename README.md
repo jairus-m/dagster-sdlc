@@ -1,15 +1,18 @@
-# Work In Progress..
+# The Analytics Development Lifecycle within a Modern Data Engineering Framework
+
+Utilizing dltHub, dbt, + dagster as a framework for developing data products with software engineering best practices. 
+
 ![Slide1 2](https://github.com/user-attachments/assets/21c3a611-726b-4857-ac89-29d7ca31239e)
 
-While the short-term goal is to learn these tools, the greater goal is to understand and flesh out what the full development and deployment cycle look like for creating these custom EL pipelines. We have a great process using dbt where we have local development, testing, versioning/branching, CICD, code-review, separation of dev and prod, project structure/cohesion etc., but how can we apply that to the 10-20% of ingestion jobs that cannot be done in a managed tool like Airbyte and/or is best done using a custom solution.
+While the short-term goal is to learn these tools, the greater goal is to understand and flesh out what the full development and deployment cycle look like for orchestrating a data platform and deploying custom pipelines. There is a great process using dbt where we have local development, testing, versioning/branching, CICD, code-review, separation of dev and prod, project structure/cohesion etc., but how can we apply that to the entire data platform and espeacially, the 10-20% of ingestion jobs that cannot be done in a managed tool like Airbyte and/or is best done using a custom solution?
 
-# Current Status [12/8/24]
-<img width="1512" alt="Screenshot 2024-12-08 at 1 47 03 PM" src="https://github.com/user-attachments/assets/5747ec3d-ca7b-4099-92a9-4d77a1340fef">
+# Current Status [12/14/24]
+<img width="1512" alt="Screenshot 2024-12-13 at 11 00 14 PM" src="https://github.com/user-attachments/assets/a29f1da9-2d6c-46f7-b3ed-3ed6679c88e0" />
 
 - Built a dltHub EL pipeline via the RESTAPIConfig class in `dagster_proj/assets/activities.py`
   - Declaratively extracts my raw activity data from Strava's REST API and loads it into DuckDB
 - Built a dbt-core project to transform the staged activities data in `analytics_dbt/models`
-- Orchestrated ingest and transformation with Dagster
+- Orchestrated ingest, transformation, and downstream dependecies (ML) with Dagster
   - Developed in dev environment and materaizlied in `dagster dev` server
   - Configured resources / credentials in .env
   - Current Dagster folder structure (dependencies managed by UV)
@@ -20,11 +23,15 @@ While the short-term goal is to learn these tools, the greater goal is to unders
       - Schedules: `dagster_proj/schedules/__init__.py`
       - Definitions: `dagster_proj/__init__.py`
     - The structure is experimental and based on the DagsterU courses
+- Created an sklearn ML pipeline to predict energy expenditure for a given cycling activity
+  - WIP but the general flow of preprocessing, building the ML model, training, testing/evaluation, and prediction can be found in `dagster_proj/assets/energy_prediction.py`
+  - This a downstream dependency of a dbt asset materialized in duckdb
 
 ## TODO:
 - Concretely seperate dev from prod
 - Deploy to prod environment (branching deployments, testing, CICD, etc)
-- Creata donwstream dependecy from dbt assets (ML model)
+- Add unittests
+- Incorporate a Python linter (like ruff) to make sure code is standardized, neat, and follow PEP8 
 
 ## Goals:
 - Learn the dlt library to maximize features such as 
@@ -90,3 +97,24 @@ While the short-term goal is to learn these tools, the greater goal is to unders
     - type tests
     - data tests
 - Will add more as they come
+
+
+# Getting Started:
+1. Clone this repo locally
+2. Create a `.env` file at the root of the directory:
+  ```
+  DUCKDB_DATABASE=data/staging/strava.duckdb
+  DAGSTER_ENVIRONMENT=dev
+  DBT_PROFILES_DIR=/Users/FULL_PATH_TO_CLONED_REPO/analytics_dbt
+
+  #strava
+  STRAVA_AUTH_URL=https://www.strava.com/oauth/token
+  STRAVA_ACTIVITES_URL=https://www.strava.com/api/v3/athlete/activities
+  CLIENT_ID= 
+  CLIENT_SECRET=
+  REFRESH_TOKEN=
+  ```
+3. Download `uv` and run `uv sync`
+4. Build the Python package in developer mode via `uv pip install -e ".[dev]"`
+5. Run the dagster daemon locally via `dagster dev`
+6. Materialize the pipeline!
