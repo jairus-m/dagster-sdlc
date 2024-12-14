@@ -1,13 +1,10 @@
 version: 2
 
 sources:
-  - name: activities_staging
-    description: Source data from Strava (raw)
-    database: 
-    schema:
+  - name: strava
+    schema: activities_staging
     tables:
       - name: activities
-        identifier: strava_activities
         description: Source data containing all activities and fields
         columns:
           - name: id
