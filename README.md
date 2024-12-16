@@ -2,7 +2,8 @@
 
 Utilizing dltHub, dbt, + dagster as a framework for developing data products with software engineering best practices. 
 
-![Slide1 2](https://github.com/user-attachments/assets/21c3a611-726b-4857-ac89-29d7ca31239e)
+![Slide1](https://github.com/user-attachments/assets/0c0843cb-9a6d-41e3-9309-379a21147a5a)
+
 
 While the short-term goal is to learn these tools, the greater goal is to understand and flesh out what the full development and deployment cycle look like for orchestrating a data platform and deploying custom pipelines. There is a great process using dbt where we have local development, testing, versioning/branching, CICD, code-review, separation of dev and prod, project structure/cohesion etc., but how can we apply that to the entire data platform and espeacially, the 10-20% of ingestion jobs that cannot be done in a managed tool like Airbyte and/or is best done using a custom solution?
 
