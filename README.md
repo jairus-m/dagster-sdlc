@@ -7,9 +7,11 @@ Utilizing dltHub, dbt, + dagster as a framework for developing data products wit
 
 While the short-term goal is to learn these tools, the greater goal is to understand and flesh out what the full development and deployment cycle look like for orchestrating a data platform and deploying custom pipelines. There is a great process using dbt where we have local development, testing, versioning/branching, CICD, code-review, separation of dev and prod, project structure/cohesion etc., but how can we apply that to the entire data platform and espeacially, the 10-20% of ingestion jobs that cannot be done in a managed tool like Airbyte and/or is best done using a custom solution?
 
-# Current Status [12/14/24]
+# Current Status [12/17/24]
 <img width="1512" alt="Screenshot 2024-12-13 at 11 00 14 PM" src="https://github.com/user-attachments/assets/a29f1da9-2d6c-46f7-b3ed-3ed6679c88e0" />
 
+- Deployed this project to Dagster+ !!!
+  - CICD w/ branching deployments for every PR
 - Built a dltHub EL pipeline via the RESTAPIConfig class in `dagster_proj/assets/activities.py`
   - Declaratively extracts my raw activity data from Strava's REST API and loads it into DuckDB
 - Built a dbt-core project to transform the staged activities data in `analytics_dbt/models`
@@ -30,7 +32,6 @@ While the short-term goal is to learn these tools, the greater goal is to unders
 
 ## TODO:
 - Concretely seperate dev from prod
-- Deploy to prod environment (branching deployments, testing, CICD, etc)
 - Add unittests
 - Incorporate a Python linter (like ruff) to make sure code is standardized, neat, and follow PEP8 
 
