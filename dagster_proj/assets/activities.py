@@ -32,6 +32,7 @@ def strava_access_token(refresh_token, client_id, client_secret):
     access_token = response.json()['access_token']
     return access_token
 
+@dlt.source
 def strava_rest_api_config(client_id, client_secret, refresh_token):
     logger.info("Extracting Strava data source")
     access_token = strava_access_token(refresh_token, client_id, client_secret)
