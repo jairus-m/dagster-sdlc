@@ -3,3 +3,5 @@ logs
 .env
 dagster_proj.egg-info
 .vscode
+*.pyc
+__pyache__
