@@ -12,30 +12,14 @@ from dlt.sources.rest_api import RESTAPIConfig, rest_api_resources
 import pendulum
 import sys
 
+from ..resources import StravaAPIResource, strava_api_resouce
+
 logger = get_dagster_logger()
 
-CLIENT_ID = EnvVar("CLIENT_ID").get_value()
-CLIENT_SECRET = EnvVar("CLIENT_SECRET").get_value()
-REFRESH_TOEKEN = EnvVar("REFRESH_TOKEN").get_value()
-
-
-def strava_access_token(refresh_token, client_id, client_secret):
-    """Return the access_token for Authorization bearer"""
-    auth_url = "https://www.strava.com/oauth/token"
-    payload = {
-        'client_id': client_id,
-        'client_secret': client_secret,
-        'refresh_token': refresh_token,
-        'grant_type': 'refresh_token'
-    }
-    response = requests.post(auth_url, data=payload)
-    access_token = response.json()['access_token']
-    return access_token
-
 @dlt.source
-def strava_rest_api_config(client_id, client_secret, refresh_token):
+def strava_rest_api_config(strava_resource: StravaAPIResource):
     logger.info("Extracting Strava data source")
-    access_token = strava_access_token(refresh_token, client_id, client_secret)
+    access_token = strava_api_resouce.get_access_token()
 
     config: RESTAPIConfig = {
         "client": {
@@ -85,11 +69,7 @@ def load_strava_activities():
         dataset_name="activities",
         progress="log")
 
-    source = strava_rest_api_config(
-        client_id=CLIENT_ID,
-        client_secret=CLIENT_SECRET,
-        refresh_token=REFRESH_TOEKEN
-    )
+    source = strava_rest_api_config(strava_api_resouce)
 
     load_info = pipeline.run(source)
     logger.info(load_info)
