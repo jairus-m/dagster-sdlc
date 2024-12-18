@@ -14,6 +14,7 @@ dependencies = [
     "dagster-dbt>=0.25.3",
     "numpy>=2.0.2",
     "scikit-learn>=1.6.0",
+    "dagster-cloud>=1.9.3",
 ]
 
 [project.optional-dependencies]
@@ -30,7 +31,5 @@ build-backend = "setuptools.build_meta"
 module_name = "dagster_proj"
 code_location_name = "dagster_proj"
 
-[dependency-groups]
-dev = [
-    "ipykernel>=6.29.5",
-]
+[tool.setuptools]
+packages = ["dagster_proj"]
