@@ -10,7 +10,7 @@ While the short-term goal is to learn these tools, the greater goal is to unders
 # Current Status [12/17/24]
 <img width="1512" alt="Screenshot 2024-12-13 at 11 00 14 PM" src="https://github.com/user-attachments/assets/a29f1da9-2d6c-46f7-b3ed-3ed6679c88e0" />
 
-- Deployed this project to Dagster+ !!!
+- Officially Deployed this project to Dagster+ !!!
   - CICD w/ branching deployments for every PR
 - Built a dltHub EL pipeline via the RESTAPIConfig class in `dagster_proj/assets/activities.py`
   - Declaratively extracts my raw activity data from Strava's REST API and loads it into DuckDB
@@ -64,9 +64,6 @@ While the short-term goal is to learn these tools, the greater goal is to unders
       - Increased long-term technical debt 
       - Shitty dev experience  
 
-### The case for an orchestrator: 
-- An orchestrator addresses the fragmentation by providing a unified system for managing, monitoring, and orchestrating all data assets and workflows.  
-- However, an orchestrator does not address pains of not having a solid software development lifecycle 
 
 ### How Dagster can addreses these problems:
 - Declarative and asset-based  
@@ -76,29 +73,6 @@ While the short-term goal is to learn these tools, the greater goal is to unders
 - Fully hosted, serverless solution to execute custom ingestion code (hydrib deployments as well!)
 - Integrates well with dbt 
 - All the benefits of having an orchestrator for end-to-end observability, logging, testing, and has a built-in data catalog 
-
-## Current Status
-- Learning the foundations of dlt concepts, configs, classes, and other features by refactoring an old ELT pipeline
-- Once i have a better grasp, will move on to migrating to a dagster project and flesh out local dev/testing, project stucture, and deployoment
-- Then will introduce a dagster project with multiple dlt pipelines and dependencies
-
-## Outstanding Questions
-- What is the best way to implement logging within a generator?
-  - How to create a standard logging object for use across an entire repository?
-- What does deployment look like for dlt Pipelines?
-  - via GitHub actions?
-  - via serverless Dagster+?
-- How would a Dagster repo with mulitple pipelines and dependencies be organized?
-    - Mulitple code locations?
-    - One code location?
-    - What is the best structure of the repo?
-- What would the full analytics development lifecycle look like with these tools?
-    - Local dev/testing, CICD, branching, prod deployment, etc
-- How does testing work?
-    - unit tests
-    - type tests
-    - data tests
-- Will add more as they come
 
 
 # Getting Started:
@@ -110,8 +84,6 @@ While the short-term goal is to learn these tools, the greater goal is to unders
   DBT_PROFILES_DIR=/Users/FULL_PATH_TO_CLONED_REPO/analytics_dbt
 
   #strava
-  STRAVA_AUTH_URL=https://www.strava.com/oauth/token
-  STRAVA_ACTIVITES_URL=https://www.strava.com/api/v3/athlete/activities
   CLIENT_ID= 
   CLIENT_SECRET=
   REFRESH_TOKEN=
@@ -120,3 +92,5 @@ While the short-term goal is to learn these tools, the greater goal is to unders
 4. Build the Python package in developer mode via `uv pip install -e ".[dev]"`
 5. Run the dagster daemon locally via `dagster dev`
 6. Materialize the pipeline!
+
+Note: The `refresh_token` in the Strava UI produces an `access_token` that is limited in scope. Please follow these [Strava Dev Docs](https://developers.strava.com/docs/getting-started/#oauth) to generate the proper `refresh_token` which will then produce an `access_token` with the proper scopes. 
