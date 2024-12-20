@@ -2,14 +2,10 @@ version: 2
 
 models:
   - name: fct_activities
-    description: Contains all activity data with dimensions as foreign keys
-  - name: dim_activity_names
-    description: Activity names paired with their unique activity ID
+    description: Contains all activity data with ID FK
+  - name: dim_activities
+    description: Activity ID paired with activity dims
   - name: dim_dates
     description: Date dimension with time bins
-  - name: dim_has_heartrate
-    description: Simple boolean table (1 = True, 2 = False)
-  - name: dim_privacy
-    description: Simple boolean table ( 1 = Private/Only Me, 2 = Public/Everyone)
-  - name: dim_sport_type
-    description: Contains sport_type unique dimensions including the greather categories of (Cyling, Running, Other)
+  - name: sport_type_weekly_totals
+    description: Aggregated metrics by sport type per week
