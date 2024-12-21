@@ -7,7 +7,7 @@ from .configured_resources import StravaAPIResource
 
 dbt_resource = DbtCliResource(
     project_dir=dbt_project,
-    profiles_dir='analytics_dbt',
+    profiles_dir="analytics_dbt",
 )
 
 database_resource = DuckDBResource(

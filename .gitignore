@@ -5,3 +5,5 @@ dagster_proj.egg-info
 .vscode
 *.pyc
 __pyache__
+.ruff_cache
+.DS_Store
