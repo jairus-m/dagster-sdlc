@@ -3,9 +3,23 @@ version: 2
 models:
   - name: fct_activities
     description: Contains all activity data with ID FK
+    columns:
+    - name: id
+      data_tests: 
+        - not_null
+        - unique
+
   - name: dim_activities
     description: Activity ID paired with activity dims
-  - name: dim_dates
-    description: Date dimension with time bins
+    columns:
+    - name: id
+      data_tests: 
+        - not_null
+        - unique
+    - name: sport_type
+      data_tests:
+        - accepted_values: 
+            values: ['Cycling', 'Running', 'Other']
+
   - name: sport_type_weekly_totals
     description: Aggregated metrics by sport type per week

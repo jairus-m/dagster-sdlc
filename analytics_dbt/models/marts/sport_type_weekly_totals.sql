@@ -1,5 +1,5 @@
 select
-    date_trunc('week', strptime(fa.date, '%m-%d-%Y')) AS week_start
+    da.week_start
     , da.sport_type
     , sum(distance_miles) as distance_miles
     , sum(moving_time_minutes) as moving_time_minutes

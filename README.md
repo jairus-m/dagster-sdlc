@@ -39,9 +39,10 @@ While the short-term goal is to learn these tools, the greater goal is to unders
 1. Clone this repo locally
 2. Create a `.env` file at the root of the directory:
   ```
-  DUCKDB_DATABASE=data/staging/strava.duckdb
+  # these are the config values for local dev and will change in branch/prod deployment
+  DBT_TARGET=dev
   DAGSTER_ENVIRONMENT=dev
-  DBT_PROFILES_DIR=/Users/FULL_PATH_TO_CLONED_REPO/analytics_dbt
+  DUCKDB_DATABASE=data/dev/strava.duckdb
 
   #strava
   CLIENT_ID= 
