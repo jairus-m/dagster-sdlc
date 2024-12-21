@@ -12,8 +12,9 @@ While the short-term goal is to learn these tools, the greater goal is to unders
 
 - Built a dltHub EL pipeline via the RESTAPIConfig class in `dagster_proj/assets/activities.py`
   - Declaratively extracts my raw activity data from Strava's REST API and loads it into DuckDB
+  - Created a custom configurable resource for Strava API - https://github.com/jairus-m/dagster-dlt/pull/5
 - Built a dbt-core project to transform the staged activities data in `analytics_dbt/models`
-- Orchestrated ingest, transformation, and downstream dependecies (ML) with Dagster
+- Orchestrated ingest, transformation, and downstream dependecies (ML) with Dagster - https://github.com/jairus-m/dagster-dlt/pull/2, https://github.com/jairus-m/dagster-dlt/pull/6
   - Developed in dev environment and materaizlied in `dagster dev` server
   - Configured resources / credentials in .env
   - Current Dagster folder structure (dependencies managed by UV)
@@ -31,11 +32,12 @@ While the short-term goal is to learn these tools, the greater goal is to unders
 ## Deployment Status
 - Officially Deployed this project to Dagster+ !!!
   - CICD w/ branching deployments for every PR
-- Seperated execution environments into ([implementation details](https://github.com/jairus-m/dagster-dlt/pull/9))
+- Seperated execution environments - https://github.com/jairus-m/dagster-dlt/pull/9
   - dev
   - branch
   - prod
-- Added `ruff` Python linter
+- Added `ruff` Python linter - https://github.com/jairus-m/dagster-dlt/pull/8
+- Astral `uv` for Python dependency management - https://github.com/jairus-m/dagster-dlt/pull/1
 
 ## TODO:
 - Add unit tests
