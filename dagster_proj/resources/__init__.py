@@ -5,12 +5,15 @@ from ..project import dbt_project
 
 from .configured_resources import StravaAPIResource
 
+PROFILES_DIR = "analytics_dbt"
+
 dbt_resource = DbtCliResource(
     project_dir=dbt_project,
-    profiles_dir="analytics_dbt",
+    profiles_dir=PROFILES_DIR,
+    target=EnvVar("DBT_TARGET"),
 )
 
-database_resource = DuckDBResource(
+duckdb_resource = DuckDBResource(
     database=EnvVar("DUCKDB_DATABASE"),
 )
 
