@@ -59,8 +59,9 @@ def load_strava_activities():
     to load raw Strava activities into DuckDB
     """
     duckdb_database_path = EnvVar("DUCKDB_DATABASE").get_value()
-    logger.info(f'Dagster Env: {EnvVar('DAGSTER_ENVIRONMENT').get_value()}')
-    logger.info(f'Writing to {duckdb_database_path}..')
+
+    logger.info(f"Dagster Env: {EnvVar('DAGSTER_ENVIRONMENT').get_value()}")
+    logger.info(f"Writing to {duckdb_database_path}..")
 
     pipeline = dlt.pipeline(
         pipeline_name="strava_rest_config",
