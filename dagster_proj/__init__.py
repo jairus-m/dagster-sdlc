@@ -2,7 +2,7 @@ import os
 
 from dagster import Definitions, load_assets_from_modules
 
-from .assets import activities, dbt, energy_prediction
+from .assets import activities, dbt, energy_prediction, asset_checks
 from .resources import duckdb_resource, dbt_resource, strava_api_resouce
 from .jobs import activities_update_job
 from .schedules import activities_update_schedule
@@ -18,8 +18,9 @@ all_schedules = [activities_update_schedule]
 
 defs = Definitions(
     assets=activities_assets + ml_assets + analytics_dbt_assets + ml_assets,
+    asset_checks=asset_checks, # defined in assets/__init__.py
     resources={
-        "database": duckdb_resource,
+        "duckdb": duckdb_resource,
         "dbt": dbt_resource,
         "strava": strava_api_resouce,
     },
