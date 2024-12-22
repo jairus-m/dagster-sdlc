@@ -26,7 +26,7 @@ logger = get_dagster_logger()
 
 
 @asset(
-    deps=["fct_activities"],
+    deps=["fct_activities", "dim_activities"],
     compute_kind="DuckDB",
     required_resource_keys={"duckdb"},
 )
