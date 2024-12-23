@@ -2,6 +2,7 @@ from dagster import (
     asset,
     EnvVar,
     get_dagster_logger,
+    AssetExecutionContext,
 )
 import dlt
 from dlt.sources.rest_api import RESTAPIConfig, rest_api_resources
@@ -52,8 +53,12 @@ def strava_rest_api_config(strava_resource: StravaAPIResource):
     yield from rest_api_resources(config)
 
 
-@asset(key=["strava", "activities"], group_name="dltHub")
-def load_strava_activities():
+@asset(
+    key=["strava", "activities"],
+    group_name="dltHub",
+    required_resource_keys={"strava"},
+)
+def load_strava_activities(context: AssetExecutionContext):
     """
     dlt EL pipeline based off declarative Rest API Config
     to load raw Strava activities into DuckDB
@@ -70,7 +75,7 @@ def load_strava_activities():
         progress="log",
     )
 
-    source = strava_rest_api_config(strava_api_resouce)
+    source = strava_rest_api_config(context.resources.strava)
 
     load_info = pipeline.run(source)
     logger.info(load_info)
