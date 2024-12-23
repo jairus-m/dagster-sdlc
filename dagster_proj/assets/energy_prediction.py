@@ -1,13 +1,14 @@
 from dagster import (
     asset,
+    asset_check,
+    AssetCheckResult,
     multi_asset,
     AssetOut,
     MaterializeResult,
     MetadataValue,
     get_dagster_logger,
+    AssetExecutionContext
 )
-
-from dagster_duckdb import DuckDBResource
 
 import numpy as np
 
@@ -25,10 +26,11 @@ logger = get_dagster_logger()
 
 
 @asset(
-    deps=["fct_activities"],
+    deps=["fct_activities", "dim_activities"],
     compute_kind="DuckDB",
+    required_resource_keys={"duckdb"},
 )
-def cycling_data(database: DuckDBResource):
+def cycling_data(context: AssetExecutionContext): # duckdb matches the string, 'duckdb'defines in Definitions resource
     """Gets cycling data from DuckDB"""
     query = """
         select 
@@ -40,15 +42,26 @@ def cycling_data(database: DuckDBResource):
             , weighted_average_watts
             , kilojoules
             , average_heartrate
-        from strava.obt_clean_activities
-        where sport_type in ('Virtual Ride', 'Ride')
+        from strava.fct_activities as fct
+        left join strava.dim_activities as dim
+            on fct.id = dim.id
+        where sport_type = 'Cycling'
             and average_watts is not null
     """
-    with database.get_connection() as conn:
+    with context.resources.duckdb.get_connection() as conn:
         df = conn.execute(query).fetch_df()
     logger.info(f"Size of data: {df.shape}")
     return df
 
+@asset_check(asset=cycling_data)
+def check_cycling_data_size(cycling_data):
+    """Check that the cycling data has more than 1500 rows."""
+    num_rows = cycling_data.shape[0]
+    passed = num_rows > 1500
+    return AssetCheckResult(
+        passed=passed,
+        metadata={"num_rows": num_rows}
+    )
 
 @multi_asset(outs={"training_data": AssetOut(), "test_data": AssetOut()})
 def preprocess_data(cycling_data):
