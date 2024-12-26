@@ -8,13 +8,14 @@ dependencies = [
     "dagster-webserver>=1.9.3",
     "dagster>=1.9.3",
     "dbt-duckdb>=1.9.0",
-    "dlt[duckdb]>=1.4.0",
+    "dlt[duckdb,snowflake]>=1.4.0",
     "streamlit>=1.40.1",
     "dagster-duckdb>=0.25.3",
     "dagster-dbt>=0.25.3",
     "numpy>=2.0.2",
     "scikit-learn>=1.6.0",
     "dagster-cloud>=1.9.3",
+    "dbt-snowflake>=1.8.4",
 ]
 
 [project.optional-dependencies]
