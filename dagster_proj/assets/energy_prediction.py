@@ -42,8 +42,8 @@ def cycling_data(context: AssetExecutionContext): # duckdb matches the string, '
             , weighted_average_watts
             , kilojoules
             , average_heartrate
-        from strava.fct_activities as fct
-        left join strava.dim_activities as dim
+        from dbt.fct_activities as fct
+        left join dbt.dim_activities as dim
             on fct.id = dim.id
         where sport_type = 'Cycling'
             and average_watts is not null

@@ -4,11 +4,14 @@ from dagster import (
     get_dagster_logger,
     AssetExecutionContext,
 )
+
 import dlt
 from dlt.sources.rest_api import RESTAPIConfig, rest_api_resources
+
 import pendulum
 
-from ..resources import StravaAPIResource, strava_api_resouce
+from ..resources import StravaAPIResource
+from ..utils import dynamic_write_dlt
 
 logger = get_dagster_logger()
 
@@ -63,19 +66,19 @@ def load_strava_activities(context: AssetExecutionContext):
     dlt EL pipeline based off declarative Rest API Config
     to load raw Strava activities into DuckDB
     """
-    duckdb_database_path = EnvVar("DUCKDB_DATABASE").get_value()
+    DUCKDB_DATABASE_PATH = EnvVar("DUCKDB_DATABASE").get_value()
+    DAGSTER_ENVIRONMENT = EnvVar("DAGSTER_ENVIRONMENT").get_value()
 
-    logger.info(f"Dagster Env: {EnvVar('DAGSTER_ENVIRONMENT').get_value()}")
-    logger.info(f"Writing to {duckdb_database_path}..")
+    logger.info(f"Dagster Env: {DAGSTER_ENVIRONMENT}")
 
-    pipeline = dlt.pipeline(
-        pipeline_name="strava_rest_config",
-        destination=dlt.destinations.duckdb(duckdb_database_path),
-        dataset_name="activities",
-        progress="log",
+    # util function to write to DuckDB or Snowflake based on environment
+    pipeline = dynamic_write_dlt(
+        dagster_environment=DAGSTER_ENVIRONMENT,
+        duckdb_database_path=DUCKDB_DATABASE_PATH,
+        pipeline_name="strava_rest_api_config",
+        dataset_name="strava_data" # schema in dwh
     )
 
     source = strava_rest_api_config(context.resources.strava)
-
     load_info = pipeline.run(source)
     logger.info(load_info)
