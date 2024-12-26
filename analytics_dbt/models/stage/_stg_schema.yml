@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: strava
-    schema: activities
+    schema: strava_data
     tables:
       - name: activities
         description: Source data containing all activities and fields
