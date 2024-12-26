@@ -32,7 +32,9 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   dbt_strava:
     # Config indicated by + and applies to all files under models/example/
-    src:
+    stage:
       +materialized: view
-    intermedaite:
-      +materialized: view
+    source:
+      +materialized: table
+    reporting:
+      +materialized: table

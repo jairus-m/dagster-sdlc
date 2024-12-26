@@ -23,4 +23,4 @@ select
     , max_heartrate
     , elev_high_feet
     , elev_low_feet
-from {{ ref('obt_clean_activities') }}
+from {{ ref('src_activities') }}
