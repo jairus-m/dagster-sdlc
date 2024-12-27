@@ -643,6 +643,7 @@ dependencies = [
     { name = "dagster-cloud" },
     { name = "dagster-dbt" },
     { name = "dagster-duckdb" },
+    { name = "dagster-snowflake" },
     { name = "dagster-webserver" },
     { name = "dbt-duckdb" },
     { name = "dbt-snowflake" },
@@ -666,6 +667,7 @@ requires-dist = [
     { name = "dagster-cloud", specifier = ">=1.9.3" },
     { name = "dagster-dbt", specifier = ">=0.25.3" },
     { name = "dagster-duckdb", specifier = ">=0.25.3" },
+    { name = "dagster-snowflake", specifier = ">=0.25.3" },
     { name = "dagster-webserver", specifier = ">=1.9.3" },
     { name = "dagster-webserver", marker = "extra == 'dev'" },
     { name = "dbt-duckdb", specifier = ">=1.9.0" },
@@ -676,6 +678,19 @@ requires-dist = [
     { name = "ruff", marker = "extra == 'dev'" },
     { name = "scikit-learn", specifier = ">=1.6.0" },
     { name = "streamlit", specifier = ">=1.40.1" },
+]
+
+[[package]]
+name = "dagster-snowflake"
+version = "0.25.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "dagster" },
+    { name = "snowflake-connector-python" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/7c/c4/c191c73b036f3bbc4da600d9ecbff8de35cc89843143ba59728aa0f6cc9b/dagster-snowflake-0.25.3.tar.gz", hash = "sha256:80e4b389cae73265801b1f052374684a543994edc25fadb85a0e0b05d69822f5", size = 17607 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a7/21/134c1ade5e1e5886d1c54b1e208e54940b209fc3ad901d4777512e23e035/dagster_snowflake-0.25.3-py3-none-any.whl", hash = "sha256:dfe4fb6b35a98a8165ab59f38a38f3f386551184bb2f4d9ac28484ef9cc7f0bc", size = 18973 },
 ]
 
 [[package]]

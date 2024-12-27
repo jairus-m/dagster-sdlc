@@ -16,6 +16,7 @@ dependencies = [
     "scikit-learn>=1.6.0",
     "dagster-cloud>=1.9.3",
     "dbt-snowflake>=1.8.4",
+    "dagster-snowflake>=0.25.3",
 ]
 
 [project.optional-dependencies]

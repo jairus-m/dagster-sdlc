@@ -85,6 +85,7 @@ dagster==1.9.3
     #   dagster-dbt
     #   dagster-duckdb
     #   dagster-graphql
+    #   dagster-snowflake
     #   dagster-webserver
 dagster-cloud==1.9.3
     # via dagster-proj (pyproject.toml)
@@ -98,6 +99,8 @@ dagster-graphql==1.9.3
     # via dagster-webserver
 dagster-pipes==1.9.3
     # via dagster
+dagster-snowflake==0.25.3
+    # via dagster-proj (pyproject.toml)
 dagster-webserver==1.9.3
     # via dagster-proj (pyproject.toml)
 dbt-adapters==1.9.0
@@ -444,6 +447,7 @@ sniffio==1.3.1
     # via anyio
 snowflake-connector-python==3.12.4
     # via
+    #   dagster-snowflake
     #   dbt-snowflake
     #   dlt
 sortedcontainers==2.4.0
