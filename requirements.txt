@@ -5,21 +5,33 @@ agate==1.9.1
     #   dbt-adapters
     #   dbt-common
     #   dbt-core
+    #   dbt-snowflake
+aiohappyeyeballs==2.4.3
+    # via aiohttp
+aiohttp==3.11.2
+    # via dlt
+aiosignal==1.3.1
+    # via aiohttp
 alembic==1.14.0
     # via dagster
-altair==5.5.0
+altair==5.4.1
     # via streamlit
 annotated-types==0.7.0
     # via pydantic
 antlr4-python3-runtime==4.13.2
     # via dagster
-anyio==4.7.0
+anyio==4.6.2.post1
     # via
     #   gql
     #   starlette
     #   watchfiles
-attrs==24.3.0
+asn1crypto==1.5.1
+    # via snowflake-connector-python
+astunparse==1.6.3
+    # via dlt
+attrs==24.2.0
     # via
+    #   aiohttp
     #   jsonschema
     #   referencing
 babel==2.16.0
@@ -30,12 +42,18 @@ blinker==1.9.0
     # via streamlit
 cachetools==5.5.0
     # via streamlit
-certifi==2024.12.14
-    # via requests
+certifi==2024.8.30
+    # via
+    #   requests
+    #   snowflake-connector-python
 cffi==1.17.1
-    # via cryptography
+    # via
+    #   cryptography
+    #   snowflake-connector-python
 charset-normalizer==3.4.0
-    # via requests
+    # via
+    #   requests
+    #   snowflake-connector-python
 click==8.1.7
     # via
     #   dagster
@@ -53,10 +71,13 @@ coloredlogs==14.0
 croniter==3.0.4
     # via dagster
 cryptography==44.0.0
-    # via pyjwt
+    # via
+    #   pyjwt
+    #   pyopenssl
+    #   snowflake-connector-python
 daff==1.3.46
     # via dbt-core
-dagster==1.9.5
+dagster==1.9.3
     # via
     #   dagster-proj (pyproject.toml)
     #   dagster-cloud
@@ -64,49 +85,51 @@ dagster==1.9.5
     #   dagster-dbt
     #   dagster-duckdb
     #   dagster-graphql
+    #   dagster-snowflake
     #   dagster-webserver
-dagster-cloud==1.9.5
+dagster-cloud==1.9.3
     # via dagster-proj (pyproject.toml)
-dagster-cloud-cli==1.9.5
+dagster-cloud-cli==1.9.3
     # via dagster-cloud
-dagster-dbt==0.25.5
+dagster-dbt==0.25.3
     # via dagster-proj (pyproject.toml)
-dagster-duckdb==0.25.5
+dagster-duckdb==0.25.3
     # via dagster-proj (pyproject.toml)
-dagster-graphql==1.9.5
+dagster-graphql==1.9.3
     # via dagster-webserver
-dagster-pipes==1.9.5
+dagster-pipes==1.9.3
     # via dagster
-dagster-webserver==1.9.5
+dagster-snowflake==0.25.3
     # via dagster-proj (pyproject.toml)
-dbt-adapters==1.10.4
+dagster-webserver==1.9.3
+    # via dagster-proj (pyproject.toml)
+dbt-adapters==1.9.0
     # via
     #   dbt-core
     #   dbt-duckdb
-dbt-common==1.14.0
+    #   dbt-snowflake
+dbt-common==1.12.0
     # via
     #   dbt-adapters
     #   dbt-core
     #   dbt-duckdb
-dbt-core==1.8.9
+    #   dbt-snowflake
+dbt-core==1.8.7
     # via
     #   dagster-dbt
     #   dbt-duckdb
-dbt-duckdb==1.9.1
+    #   dbt-snowflake
+dbt-duckdb==1.9.0
     # via dagster-proj (pyproject.toml)
 dbt-extractor==0.5.1
     # via dbt-core
 dbt-semantic-interfaces==0.5.1
     # via dbt-core
+dbt-snowflake==1.8.4
+    # via dagster-proj (pyproject.toml)
 deepdiff==7.0.1
     # via dbt-common
-deprecated==1.2.15
-    # via
-    #   opentelemetry-api
-    #   opentelemetry-exporter-otlp-proto-grpc
-    #   opentelemetry-exporter-otlp-proto-http
-    #   opentelemetry-semantic-conventions
-dlt==1.4.1
+dlt==1.4.0
     # via dagster-proj (pyproject.toml)
 docstring-parser==0.16
     # via dagster
@@ -116,7 +139,13 @@ duckdb==1.1.3
     #   dbt-duckdb
     #   dlt
 filelock==3.16.1
-    # via dagster
+    # via
+    #   dagster
+    #   snowflake-connector-python
+frozenlist==1.5.0
+    # via
+    #   aiohttp
+    #   aiosignal
 fsspec==2024.10.0
     # via
     #   dlt
@@ -131,10 +160,6 @@ gitpython==3.1.43
     #   streamlit
 giturlparse==0.12.0
     # via dlt
-googleapis-common-protos==1.66.0
-    # via
-    #   opentelemetry-exporter-otlp-proto-grpc
-    #   opentelemetry-exporter-otlp-proto-http
 gql==3.5.0
     # via dagster-graphql
 graphene==3.4.3
@@ -150,8 +175,7 @@ grpcio==1.68.1
     # via
     #   dagster
     #   grpcio-health-checking
-    #   opentelemetry-exporter-otlp-proto-grpc
-grpcio-health-checking==1.68.1
+grpcio-health-checking==1.62.3
     # via dagster
 h11==0.14.0
     # via uvicorn
@@ -167,15 +191,20 @@ idna==3.10
     # via
     #   anyio
     #   requests
+    #   snowflake-connector-python
     #   yarl
 importlib-metadata==6.11.0
-    # via
-    #   dbt-semantic-interfaces
-    #   opentelemetry-api
+    # via dbt-semantic-interfaces
 isodate==0.6.1
     # via
     #   agate
     #   dbt-common
+jaraco-classes==3.4.0
+    # via keyring
+jaraco-context==6.0.1
+    # via keyring
+jaraco-functools==4.1.0
+    # via keyring
 jinja2==3.1.4
     # via
     #   altair
@@ -196,13 +225,15 @@ jsonschema==4.23.0
     #   dbt-semantic-interfaces
 jsonschema-specifications==2024.10.1
     # via jsonschema
+keyring==25.6.0
+    # via snowflake-connector-python
 leather==0.4.0
     # via agate
 logbook==1.5.3
     # via dbt-core
 makefun==1.15.6
     # via dlt
-mako==1.3.8
+mako==1.3.7
     # via alembic
 markdown-it-py==3.0.0
     # via rich
@@ -220,18 +251,23 @@ mdurl==0.1.2
 minimal-snowplow-tracker==0.0.2
     # via dbt-core
 more-itertools==10.5.0
-    # via dbt-semantic-interfaces
+    # via
+    #   dbt-semantic-interfaces
+    #   jaraco-classes
+    #   jaraco-functools
 msgpack==1.1.0
     # via mashumaro
 multidict==6.1.0
-    # via yarl
-narwhals==1.18.4
+    # via
+    #   aiohttp
+    #   yarl
+narwhals==1.13.5
     # via altair
 networkx==3.4.2
     # via
     #   dagster-dbt
     #   dbt-core
-numpy==2.2.0
+numpy==2.1.3
     # via
     #   dagster-proj (pyproject.toml)
     #   pandas
@@ -239,36 +275,9 @@ numpy==2.2.0
     #   scikit-learn
     #   scipy
     #   streamlit
-opentelemetry-api==1.29.0
-    # via
-    #   dagster-cloud
-    #   opentelemetry-exporter-otlp-proto-grpc
-    #   opentelemetry-exporter-otlp-proto-http
-    #   opentelemetry-sdk
-    #   opentelemetry-semantic-conventions
-opentelemetry-exporter-otlp-proto-common==1.29.0
-    # via
-    #   opentelemetry-exporter-otlp-proto-grpc
-    #   opentelemetry-exporter-otlp-proto-http
-opentelemetry-exporter-otlp-proto-grpc==1.29.0
-    # via dagster-cloud
-opentelemetry-exporter-otlp-proto-http==1.29.0
-    # via dagster-cloud
-opentelemetry-proto==1.29.0
-    # via
-    #   opentelemetry-exporter-otlp-proto-common
-    #   opentelemetry-exporter-otlp-proto-grpc
-    #   opentelemetry-exporter-otlp-proto-http
-opentelemetry-sdk==1.29.0
-    # via
-    #   dagster-cloud
-    #   opentelemetry-exporter-otlp-proto-grpc
-    #   opentelemetry-exporter-otlp-proto-http
-opentelemetry-semantic-conventions==0.50b0
-    # via opentelemetry-sdk
 ordered-set==4.1.0
     # via deepdiff
-orjson==3.10.12
+orjson==3.10.11
     # via
     #   dagster-dbt
     #   dlt
@@ -281,6 +290,7 @@ packaging==24.2
     #   dbt-core
     #   dlt
     #   requirements-parser
+    #   snowflake-connector-python
     #   streamlit
 pandas==2.2.3
     # via streamlit
@@ -298,40 +308,46 @@ pex==2.27.1
     # via dagster-cloud
 pillow==11.0.0
     # via streamlit
+platformdirs==4.3.6
+    # via snowflake-connector-python
 pluggy==1.5.0
     # via dlt
 ply==3.11
     # via jsonpath-ng
 prompt-toolkit==3.0.36
     # via questionary
-propcache==0.2.1
-    # via yarl
-protobuf==5.29.1
+propcache==0.2.0
+    # via
+    #   aiohttp
+    #   yarl
+protobuf==4.25.5
     # via
     #   dagster
     #   dbt-adapters
     #   dbt-common
     #   dbt-core
-    #   googleapis-common-protos
     #   grpcio-health-checking
-    #   opentelemetry-proto
     #   streamlit
-pyarrow==18.1.0
+pyarrow==18.0.0
     # via streamlit
 pycparser==2.22
     # via cffi
-pydantic==2.10.3
+pydantic==2.9.2
     # via
     #   dagster
     #   dbt-semantic-interfaces
-pydantic-core==2.27.1
+pydantic-core==2.23.4
     # via pydantic
 pydeck==0.9.1
     # via streamlit
 pygments==2.18.0
     # via rich
 pyjwt==2.10.1
-    # via github3-py
+    # via
+    #   github3-py
+    #   snowflake-connector-python
+pyopenssl==24.3.0
+    # via snowflake-connector-python
 python-dateutil==2.9.0.post0
     # via
     #   croniter
@@ -358,6 +374,7 @@ pytz==2024.2
     #   dbt-core
     #   dlt
     #   pandas
+    #   snowflake-connector-python
 pyyaml==6.0.2
     # via
     #   dagster
@@ -387,8 +404,8 @@ requests==2.32.3
     #   github3-py
     #   gql
     #   minimal-snowplow-tracker
-    #   opentelemetry-exporter-otlp-proto-http
     #   requests-toolbelt
+    #   snowflake-connector-python
     #   streamlit
 requests-toolbelt==1.0.0
     # via gql
@@ -400,17 +417,17 @@ rich==13.9.4
     #   dagster-dbt
     #   streamlit
     #   typer
-rpds-py==0.22.3
+rpds-py==0.21.0
     # via
     #   jsonschema
     #   referencing
 scikit-learn==1.6.0
     # via dagster-proj (pyproject.toml)
-scipy==1.14.1
+scipy==1.13.1
     # via scikit-learn
 semver==3.0.2
     # via dlt
-setuptools==75.6.0
+setuptools==75.5.0
     # via
     #   dagster
     #   dlt
@@ -418,8 +435,9 @@ shellingham==1.5.4
     # via typer
 simplejson==3.19.3
     # via dlt
-six==1.17.0
+six==1.16.0
     # via
+    #   astunparse
     #   isodate
     #   minimal-snowplow-tracker
     #   python-dateutil
@@ -427,21 +445,28 @@ smmap==5.0.1
     # via gitdb
 sniffio==1.3.1
     # via anyio
+snowflake-connector-python==3.12.4
+    # via
+    #   dagster-snowflake
+    #   dbt-snowflake
+    #   dlt
+sortedcontainers==2.4.0
+    # via snowflake-connector-python
 sqlalchemy==2.0.36
     # via
     #   alembic
     #   dagster
-sqlglot==26.0.0
+sqlglot==25.33.0
     # via dagster-dbt
 sqlglotrs==0.3.0
     # via sqlglot
-sqlparse==0.5.3
+sqlparse==0.5.2
     # via dbt-core
-starlette==0.42.0
+starlette==0.41.3
     # via
     #   dagster-graphql
     #   dagster-webserver
-streamlit==1.41.1
+streamlit==1.40.1
     # via dagster-proj (pyproject.toml)
 structlog==24.4.0
     # via dagster
@@ -462,10 +487,12 @@ toml==0.10.2
 tomli==2.2.1
     # via dagster
 tomlkit==0.13.2
-    # via dlt
+    # via
+    #   dlt
+    #   snowflake-connector-python
 toposort==1.10
     # via dagster
-tornado==6.4.2
+tornado==6.4.1
     # via streamlit
 tqdm==4.67.1
     # via dagster
@@ -474,13 +501,12 @@ typer==0.15.1
     #   dagster-cloud
     #   dagster-cloud-cli
     #   dagster-dbt
-types-setuptools==75.6.0.20241126
+types-setuptools==75.5.0.20241116
     # via requirements-parser
 typing-extensions==4.12.2
     # via
     #   alembic
     #   altair
-    #   anyio
     #   dagster
     #   dbt-adapters
     #   dbt-common
@@ -489,9 +515,9 @@ typing-extensions==4.12.2
     #   dlt
     #   graphene
     #   mashumaro
-    #   opentelemetry-sdk
     #   pydantic
     #   pydantic-core
+    #   snowflake-connector-python
     #   sqlalchemy
     #   streamlit
     #   typer
@@ -500,27 +526,29 @@ tzdata==2024.2
     #   dlt
     #   pandas
     #   pendulum
-universal-pathlib==0.2.6
+universal-pathlib==0.2.5
     # via dagster
 uritemplate==4.1.1
     # via github3-py
 urllib3==2.2.3
     # via requests
-uvicorn==0.34.0
+uvicorn==0.32.1
     # via dagster-webserver
 uvloop==0.21.0
     # via uvicorn
 watchdog==5.0.3
     # via dagster
-watchfiles==1.0.3
+watchfiles==1.0.0
     # via uvicorn
 wcwidth==0.2.13
     # via prompt-toolkit
 websockets==14.1
     # via uvicorn
-wrapt==1.17.0
-    # via deprecated
-yarl==1.18.3
-    # via gql
+wheel==0.45.0
+    # via astunparse
+yarl==1.17.1
+    # via
+    #   aiohttp
+    #   gql
 zipp==3.21.0
     # via importlib-metadata

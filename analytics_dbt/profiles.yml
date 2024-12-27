@@ -3,11 +3,26 @@ dbt_strava:
   outputs:
     dev:
       type: duckdb
+      schema: dbt
       path: '../{{ env_var("DUCKDB_DATABASE", "data/dev/strava.duckdb") }}'
     branch:
-      type: duckdb
-      path: '../{{ env_var("DUCKDB_DATABASE", "data/branch/strava.duckdb") }}'
+      account: '{{ env_var("DESTINATION__SNOWFLAKE__CREDENTIALS__HOST") }}'
+      database: ANALYTICS_STG_DB
+      password: '{{ env_var("DESTINATION__SNOWFLAKE__CREDENTIALS__PASSWORD") }}'
+      role: DATA_ENGINEER
+      schema: dbt
+      threads: 4
+      type: snowflake
+      user: JAIRUSM
+      warehouse: ANALYTICS_WH
     prod:
-      type: duckdb
-      path: '../{{ env_var("DUCKDB_DATABASE", "data/prod/strava.duckdb") }}'
+      account: '{{ env_var("DESTINATION__SNOWFLAKE__CREDENTIALS__HOST") }}'
+      database: ANALYTICS_DB
+      password: '{{ env_var("DESTINATION__SNOWFLAKE__CREDENTIALS__PASSWORD") }}'
+      role: DATA_ENGINEER
+      schema: dbt
+      threads: 4
+      type: snowflake
+      user: JAIRUSM
+      warehouse: ANALYTICS_WH
       

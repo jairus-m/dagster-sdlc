@@ -7,3 +7,4 @@ dagster_proj.egg-info
 __pyache__
 .ruff_cache
 .DS_Store
+data/

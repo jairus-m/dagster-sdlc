@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: strava
+    schema: strava_data
+    tables:
+      - name: activities
+        description: Source data containing all activities and fields
+        columns:
+          - name: id
+            description: Unique ID for each Strava activity
+            tests:
+              - unique
+              - not_null

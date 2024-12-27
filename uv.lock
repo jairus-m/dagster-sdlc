@@ -187,6 +187,15 @@ wheels = [
 ]
 
 [[package]]
+name = "asn1crypto"
+version = "1.5.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/de/cf/d547feed25b5244fcb9392e288ff9fdc3280b10260362fc45d37a798a6ee/asn1crypto-1.5.1.tar.gz", hash = "sha256:13ae38502be632115abf8a24cbe5f4da52e3b5231990aff31123c805306ccb9c", size = 121080 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c9/7f/09065fd9e27da0eda08b4d6897f1c13535066174cc023af248fc2a8d5e5a/asn1crypto-1.5.1-py2.py3-none-any.whl", hash = "sha256:db4e40728b728508912cbb3d44f19ce188f218e9eba635821bb4b68564f8fd67", size = 105045 },
+]
+
+[[package]]
 name = "astunparse"
 version = "1.6.3"
 source = { registry = "https://pypi.org/simple" }
@@ -233,6 +242,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/47/d7/5bbeb12c44d7c4f2fb5b56abce497eb5ed9f34d85701de869acedd602619/backoff-2.2.1.tar.gz", hash = "sha256:03f829f5bb1923180821643f8753b0502c3b682293992485b0eef2807afa5cba", size = 17001 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/df/73/b6e24bd22e6720ca8ee9a85a0c4a2971af8497d8f3193fa05390cbd46e09/backoff-2.2.1-py3-none-any.whl", hash = "sha256:63579f9a0628e06278f7e47b7d7d5b6ce20dc65c5e96a6f3ca99a6adca0396e8", size = 15148 },
+]
+
+[[package]]
+name = "backports-tarfile"
+version = "1.2.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/86/72/cd9b395f25e290e633655a100af28cb253e4393396264a98bd5f5951d50f/backports_tarfile-1.2.0.tar.gz", hash = "sha256:d75e02c268746e1b8144c278978b6e98e85de6ad16f8e4b0844a154557eca991", size = 86406 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b9/fa/123043af240e49752f1c4bd24da5053b6bd00cad78c2be53c0d1e8b975bc/backports.tarfile-1.2.0-py3-none-any.whl", hash = "sha256:77e284d754527b01fb1e6fa8a1afe577858ebe4e9dad8919e34c862cb399bc34", size = 30181 },
 ]
 
 [[package]]
@@ -625,9 +643,11 @@ dependencies = [
     { name = "dagster-cloud" },
     { name = "dagster-dbt" },
     { name = "dagster-duckdb" },
+    { name = "dagster-snowflake" },
     { name = "dagster-webserver" },
     { name = "dbt-duckdb" },
-    { name = "dlt", extra = ["duckdb"] },
+    { name = "dbt-snowflake" },
+    { name = "dlt", extra = ["duckdb", "snowflake"] },
     { name = "numpy", version = "2.0.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "numpy", version = "2.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "scikit-learn" },
@@ -647,15 +667,30 @@ requires-dist = [
     { name = "dagster-cloud", specifier = ">=1.9.3" },
     { name = "dagster-dbt", specifier = ">=0.25.3" },
     { name = "dagster-duckdb", specifier = ">=0.25.3" },
+    { name = "dagster-snowflake", specifier = ">=0.25.3" },
     { name = "dagster-webserver", specifier = ">=1.9.3" },
     { name = "dagster-webserver", marker = "extra == 'dev'" },
     { name = "dbt-duckdb", specifier = ">=1.9.0" },
-    { name = "dlt", extras = ["duckdb"], specifier = ">=1.4.0" },
+    { name = "dbt-snowflake", specifier = ">=1.8.4" },
+    { name = "dlt", extras = ["duckdb", "snowflake"], specifier = ">=1.4.0" },
     { name = "numpy", specifier = ">=2.0.2" },
     { name = "pytest", marker = "extra == 'dev'" },
     { name = "ruff", marker = "extra == 'dev'" },
     { name = "scikit-learn", specifier = ">=1.6.0" },
     { name = "streamlit", specifier = ">=1.40.1" },
+]
+
+[[package]]
+name = "dagster-snowflake"
+version = "0.25.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "dagster" },
+    { name = "snowflake-connector-python" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/7c/c4/c191c73b036f3bbc4da600d9ecbff8de35cc89843143ba59728aa0f6cc9b/dagster-snowflake-0.25.3.tar.gz", hash = "sha256:80e4b389cae73265801b1f052374684a543994edc25fadb85a0e0b05d69822f5", size = 17607 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a7/21/134c1ade5e1e5886d1c54b1e208e54940b209fc3ad901d4777512e23e035/dagster_snowflake-0.25.3-py3-none-any.whl", hash = "sha256:dfe4fb6b35a98a8165ab59f38a38f3f386551184bb2f4d9ac28484ef9cc7f0bc", size = 18973 },
 ]
 
 [[package]]
@@ -805,6 +840,22 @@ wheels = [
 ]
 
 [[package]]
+name = "dbt-snowflake"
+version = "1.8.4"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "agate" },
+    { name = "dbt-adapters" },
+    { name = "dbt-common" },
+    { name = "dbt-core" },
+    { name = "snowflake-connector-python", extra = ["secure-local-storage"] },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e2/dc/34e2883a03529744f2f4430ebd89e186ac69fdc164c43d6d174902f8a7e6/dbt_snowflake-1.8.4.tar.gz", hash = "sha256:9fe2fd1b7b65bdb31588c77398c1e8fe6ab77dd5395ba7dcf096fe3c9b3cc3cf", size = 34335 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a0/53/67541d2dda388f98af3e0626bed6172f0ad98845dffea69ab615dd675254/dbt_snowflake-1.8.4-py3-none-any.whl", hash = "sha256:db009c4c0c0fa9066a2a92dbded81fc6847292122f4d293ca8aaaab98d3f65e7", size = 47403 },
+]
+
+[[package]]
 name = "deepdiff"
 version = "7.0.1"
 source = { registry = "https://pypi.org/simple" }
@@ -857,6 +908,9 @@ wheels = [
 [package.optional-dependencies]
 duckdb = [
     { name = "duckdb" },
+]
+snowflake = [
+    { name = "snowflake-connector-python" },
 ]
 
 [[package]]
@@ -1332,6 +1386,51 @@ wheels = [
 ]
 
 [[package]]
+name = "jaraco-classes"
+version = "3.4.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "more-itertools" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/06/c0/ed4a27bc5571b99e3cff68f8a9fa5b56ff7df1c2251cc715a652ddd26402/jaraco.classes-3.4.0.tar.gz", hash = "sha256:47a024b51d0239c0dd8c8540c6c7f484be3b8fcf0b2d85c13825780d3b3f3acd", size = 11780 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7f/66/b15ce62552d84bbfcec9a4873ab79d993a1dd4edb922cbfccae192bd5b5f/jaraco.classes-3.4.0-py3-none-any.whl", hash = "sha256:f662826b6bed8cace05e7ff873ce0f9283b5c924470fe664fff1c2f00f581790", size = 6777 },
+]
+
+[[package]]
+name = "jaraco-context"
+version = "6.0.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "backports-tarfile", marker = "python_full_version < '3.12'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/df/ad/f3777b81bf0b6e7bc7514a1656d3e637b2e8e15fab2ce3235730b3e7a4e6/jaraco_context-6.0.1.tar.gz", hash = "sha256:9bae4ea555cf0b14938dc0aee7c9f32ed303aa20a3b73e7dc80111628792d1b3", size = 13912 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ff/db/0c52c4cf5e4bd9f5d7135ec7669a3a767af21b3a308e1ed3674881e52b62/jaraco.context-6.0.1-py3-none-any.whl", hash = "sha256:f797fc481b490edb305122c9181830a3a5b76d84ef6d1aef2fb9b47ab956f9e4", size = 6825 },
+]
+
+[[package]]
+name = "jaraco-functools"
+version = "4.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "more-itertools" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ab/23/9894b3df5d0a6eb44611c36aec777823fc2e07740dabbd0b810e19594013/jaraco_functools-4.1.0.tar.gz", hash = "sha256:70f7e0e2ae076498e212562325e805204fc092d7b4c17e0e86c959e249701a9d", size = 19159 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/9f/4f/24b319316142c44283d7540e76c7b5a6dbd5db623abd86bb7b3491c21018/jaraco.functools-4.1.0-py3-none-any.whl", hash = "sha256:ad159f13428bc4acbf5541ad6dec511f91573b90fba04df61dafa2a1231cf649", size = 10187 },
+]
+
+[[package]]
+name = "jeepney"
+version = "0.8.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d6/f4/154cf374c2daf2020e05c3c6a03c91348d59b23c5366e968feb198306fdf/jeepney-0.8.0.tar.gz", hash = "sha256:5efe48d255973902f6badc3ce55e2aa6c5c3b3bc642059ef3a91247bcfcc5806", size = 106005 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ae/72/2a1e2290f1ab1e06f71f3d0f1646c9e4634e70e1d37491535e19266e8dc9/jeepney-0.8.0-py3-none-any.whl", hash = "sha256:c0a454ad016ca575060802ee4d590dd912e35c122fa04e70306de3d076cce755", size = 48435 },
+]
+
+[[package]]
 name = "jinja2"
 version = "3.1.4"
 source = { registry = "https://pypi.org/simple" }
@@ -1389,6 +1488,24 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/10/db/58f950c996c793472e336ff3655b13fbcf1e3b359dcf52dcf3ed3b52c352/jsonschema_specifications-2024.10.1.tar.gz", hash = "sha256:0f38b83639958ce1152d02a7f062902c41c8fd20d558b0c34344292d417ae272", size = 15561 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d1/0f/8910b19ac0670a0f80ce1008e5e751c4a57e14d2c4c13a482aa6079fa9d6/jsonschema_specifications-2024.10.1-py3-none-any.whl", hash = "sha256:a09a0680616357d9a0ecf05c12ad234479f549239d0f5b55f3deea67475da9bf", size = 18459 },
+]
+
+[[package]]
+name = "keyring"
+version = "25.6.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "importlib-metadata", marker = "python_full_version < '3.12'" },
+    { name = "jaraco-classes" },
+    { name = "jaraco-context" },
+    { name = "jaraco-functools" },
+    { name = "jeepney", marker = "sys_platform == 'linux'" },
+    { name = "pywin32-ctypes", marker = "sys_platform == 'win32'" },
+    { name = "secretstorage", marker = "sys_platform == 'linux'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/70/09/d904a6e96f76ff214be59e7aa6ef7190008f52a0ab6689760a98de0bf37d/keyring-25.6.0.tar.gz", hash = "sha256:0b39998aa941431eb3d9b0d4b2460bc773b9df6fed7621c2dfb291a7e0187a66", size = 62750 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d3/32/da7f44bcb1105d3e88a0b74ebdca50c59121d2ddf71c9e34ba47df7f3a56/keyring-25.6.0-py3-none-any.whl", hash = "sha256:552a3f7af126ece7ed5c89753650eec89c7eaae8617d0aa4d9ad2b75111266bd", size = 39085 },
 ]
 
 [[package]]
@@ -2065,6 +2182,15 @@ wheels = [
 ]
 
 [[package]]
+name = "platformdirs"
+version = "4.3.6"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/13/fc/128cc9cb8f03208bdbf93d3aa862e16d376844a14f9a0ce5cf4507372de4/platformdirs-4.3.6.tar.gz", hash = "sha256:357fb2acbc885b0419afd3ce3ed34564c13c9b95c89360cd9563f73aa5e2b907", size = 21302 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/3c/a6/bc1012356d8ece4d66dd75c4b9fc6c1f6650ddd5991e421177d9f8f671be/platformdirs-4.3.6-py3-none-any.whl", hash = "sha256:73e575e1408ab8103900836b97580d5307456908a03e92031bab39e4554cc3fb", size = 18439 },
+]
+
+[[package]]
 name = "pluggy"
 version = "1.5.0"
 source = { registry = "https://pypi.org/simple" }
@@ -2365,6 +2491,18 @@ crypto = [
 ]
 
 [[package]]
+name = "pyopenssl"
+version = "24.3.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "cryptography" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/c1/d4/1067b82c4fc674d6f6e9e8d26b3dff978da46d351ca3bac171544693e085/pyopenssl-24.3.0.tar.gz", hash = "sha256:49f7a019577d834746bc55c5fce6ecbcec0f2b4ec5ce1cf43a9a173b8138bb36", size = 178944 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/42/22/40f9162e943f86f0fc927ebc648078be87def360d9d8db346619fb97df2b/pyOpenSSL-24.3.0-py3-none-any.whl", hash = "sha256:e474f5a473cd7f92221cc04976e48f4d11502804657a08a989fb3be5514c904a", size = 56111 },
+]
+
+[[package]]
 name = "pyreadline3"
 version = "3.5.4"
 source = { registry = "https://pypi.org/simple" }
@@ -2460,6 +2598,15 @@ wheels = [
 ]
 
 [[package]]
+name = "pywin32-ctypes"
+version = "0.2.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/85/9f/01a1a99704853cb63f253eea009390c88e7131c67e66a0a02099a8c917cb/pywin32-ctypes-0.2.3.tar.gz", hash = "sha256:d162dc04946d704503b2edc4d55f3dba5c1d539ead017afa00142c38b9885755", size = 29471 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/de/3d/8161f7711c017e01ac9f008dfddd9410dff3674334c233bde66e7ba65bbf/pywin32_ctypes-0.2.3-py3-none-any.whl", hash = "sha256:8a1513379d709975552d202d942d9837758905c8d01eb82b8bcc30918929e7b8", size = 30756 },
+]
+
+[[package]]
 name = "pyyaml"
 version = "6.0.2"
 source = { registry = "https://pypi.org/simple" }
@@ -2536,7 +2683,8 @@ dependencies = [
     { name = "certifi" },
     { name = "charset-normalizer" },
     { name = "idna" },
-    { name = "urllib3" },
+    { name = "urllib3", version = "1.26.20", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "urllib3", version = "2.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/63/70/2bf7780ad2d390a8d301ad0b550f1581eadbd9a20f896afe06353c2a2913/requests-2.32.3.tar.gz", hash = "sha256:55365417734eb18255590a9ff9eb97e9e1da868d4ccd6402399eaf68af20a760", size = 131218 }
 wheels = [
@@ -2763,6 +2911,19 @@ wheels = [
 ]
 
 [[package]]
+name = "secretstorage"
+version = "3.3.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "cryptography" },
+    { name = "jeepney" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/53/a4/f48c9d79cb507ed1373477dbceaba7401fd8a23af63b837fa61f1dcd3691/SecretStorage-3.3.3.tar.gz", hash = "sha256:2403533ef369eca6d2ba81718576c5e0f564d5cca1b58f73a8b23e7d4eeebd77", size = 19739 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/54/24/b4293291fa1dd830f353d2cb163295742fa87f179fcc8a20a306a81978b7/SecretStorage-3.3.3-py3-none-any.whl", hash = "sha256:f356e6628222568e3af06f2eba8df495efa13b3b63081dafd4f7d9a7b7bc9f99", size = 15221 },
+]
+
+[[package]]
 name = "semver"
 version = "3.0.2"
 source = { registry = "https://pypi.org/simple" }
@@ -2875,6 +3036,67 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/a2/87/a6771e1546d97e7e041b6ae58d80074f81b7d5121207425c964ddf5cfdbd/sniffio-1.3.1.tar.gz", hash = "sha256:f4324edc670a0f49750a81b895f35c3adb843cca46f0530f79fc1babb23789dc", size = 20372 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e9/44/75a9c9421471a6c4805dbf2356f7c181a29c1879239abab1ea2cc8f38b40/sniffio-1.3.1-py3-none-any.whl", hash = "sha256:2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2", size = 10235 },
+]
+
+[[package]]
+name = "snowflake-connector-python"
+version = "3.12.4"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "asn1crypto" },
+    { name = "certifi" },
+    { name = "cffi" },
+    { name = "charset-normalizer" },
+    { name = "cryptography" },
+    { name = "filelock" },
+    { name = "idna" },
+    { name = "packaging" },
+    { name = "platformdirs" },
+    { name = "pyjwt" },
+    { name = "pyopenssl" },
+    { name = "pytz" },
+    { name = "requests" },
+    { name = "sortedcontainers" },
+    { name = "tomlkit" },
+    { name = "typing-extensions" },
+    { name = "urllib3", version = "1.26.20", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/6b/de/f43d9c827ccc1974696ffd3c0495e2d4e98b0414b2353b7de932621f23dd/snowflake_connector_python-3.12.4.tar.gz", hash = "sha256:289e0691dfbf8ec8b7a8f58bcbb95a819890fe5e5b278fdbfc885059a63a946f", size = 743445 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/53/6c/edc8909e424654a7a3c18cbf804d8a35c17a65a2131f866a87ed8e762bd0/snowflake_connector_python-3.12.4-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:6f141c159e3244bd660279f87f32e39351b2845fcb75f8138f31d2219f983b05", size = 958038 },
+    { url = "https://files.pythonhosted.org/packages/93/a3/34c5082dfb9b555c914f4233224b8bc1f2c4d5668bc71bb587680b8dcd73/snowflake_connector_python-3.12.4-cp310-cp310-macosx_11_0_x86_64.whl", hash = "sha256:091458ba777c24adff659c5c28f0f5bb0bcca8a9b6ecc5641ae25b7c20a8f43d", size = 970665 },
+    { url = "https://files.pythonhosted.org/packages/f8/87/9eceaaba58b2ec4f9094fc3a04d953bbabbfdcc05a6b14ef12610c1039f9/snowflake_connector_python-3.12.4-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:23049d341da681ec7131cead71cdf7b1761ae5bcc08bcbdb931dcef6c25e8a5f", size = 2496731 },
+    { url = "https://files.pythonhosted.org/packages/66/0a/e35e9e0a142f3779007b0246166a245305858b198ed0dd3a41a3d2405512/snowflake_connector_python-3.12.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:cc88a09d77a8ce7e445094b2409b606ddb208b5fc9f7c7a379d0255a8d566e9d", size = 2520041 },
+    { url = "https://files.pythonhosted.org/packages/79/77/9a238c153600adff8fbd1136d9f4be1e42cb827cbe1865924bfe84653e85/snowflake_connector_python-3.12.4-cp310-cp310-win_amd64.whl", hash = "sha256:3c33fbba036805c1767ea48eb40ffc3fb79d61f2a4bb4e77b571ea6f6a998be8", size = 918272 },
+    { url = "https://files.pythonhosted.org/packages/0d/95/e8aac28d6913e4b59f96e6d361f31b9576b5f0abe4d2c4f7decf9f075932/snowflake_connector_python-3.12.4-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:2ec5cfaa1526084cf4d0e7849d5ace601245cb4ad9675ab3cd7d799b3abea481", size = 958125 },
+    { url = "https://files.pythonhosted.org/packages/67/b6/a847a94e03bdf39010048feacd57f250a91a655eed333d7d32b165f65201/snowflake_connector_python-3.12.4-cp311-cp311-macosx_11_0_x86_64.whl", hash = "sha256:ff225824b3a0fa5e822442de72172f97028f04ae183877f1305d538d8d6c5d11", size = 970770 },
+    { url = "https://files.pythonhosted.org/packages/0e/91/f97812ae9946944bcd9bfe1965af1cb9b1844919da879d90b90dfd3e5086/snowflake_connector_python-3.12.4-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:a9beced2789dc75e8f1e749aa637e7ec9b03302b4ed4b793ae0f1ff32823370e", size = 2519875 },
+    { url = "https://files.pythonhosted.org/packages/37/52/500d72079bfb322ebdf3892180ecf3dc73c117b3a966ee8d4bb1378882b2/snowflake_connector_python-3.12.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:5ea47450a04ff713f3adf28053e34103bd990291e62daee9721c76597af4b2b5", size = 2542320 },
+    { url = "https://files.pythonhosted.org/packages/59/92/74ead6bee8dd29fe372002ce59477221e04b9da96ad7aafe584afce02937/snowflake_connector_python-3.12.4-cp311-cp311-win_amd64.whl", hash = "sha256:748f9125854dca07ea471bb2bb3c5bb932a53f9b8a77ba348b50b738c77203ce", size = 918363 },
+    { url = "https://files.pythonhosted.org/packages/a5/a3/1cbe0b52b810f069bdc96c372b2d91ac51aeac32986c2832aa3fe0b0b0e5/snowflake_connector_python-3.12.4-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:4bcd0371b20d199f15e6a3c0b489bf18e27f2a88c84cf3194b2569ca039fa7d1", size = 957561 },
+    { url = "https://files.pythonhosted.org/packages/f4/05/8a5e16bd908a89f36d59686d356890c4bd6a976a487f86274181010f4b49/snowflake_connector_python-3.12.4-cp312-cp312-macosx_11_0_x86_64.whl", hash = "sha256:7900d82a450b206fa2ed6c42cd65d9b3b9fd4547eca1696937175fac2a03ba37", size = 969045 },
+    { url = "https://files.pythonhosted.org/packages/79/1b/8f5ab15d224d7bf76533c55cfd8ce73b185ce94d84241f0e900739ce3f37/snowflake_connector_python-3.12.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:300f0562aeea55e40ee03b45205dbef7b78f5ba2f1787a278c7b807e7d8db22c", size = 2533969 },
+    { url = "https://files.pythonhosted.org/packages/6e/d9/2e2fd72e0251691b5c54a219256c455141a2d3c104e411b82de598c62553/snowflake_connector_python-3.12.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:a6762a00948f003be55d7dc5de9de690315d01951a94371ec3db069d9303daba", size = 2558052 },
+    { url = "https://files.pythonhosted.org/packages/e8/cb/e0ab230ad5adc9932e595bdbec693b2499d446666daf6cb9cae306a41dd2/snowflake_connector_python-3.12.4-cp312-cp312-win_amd64.whl", hash = "sha256:83ca896790a7463b6c8cd42e1a29b8ea197cc920839ae6ee96a467475eab4ec2", size = 916627 },
+    { url = "https://files.pythonhosted.org/packages/ba/34/f9a25ad0b321b1d7ceb5c7ed53c7aa41a2a3ad03ac8bf534b865da379042/snowflake_connector_python-3.12.4-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:34947e4147d65b9211ab785f76c16cfb2f5d5a0b639358f72ccbf524ff3eda6f", size = 958670 },
+    { url = "https://files.pythonhosted.org/packages/80/96/99d770ffd392b81409fbdefb7822819931d5feb478bd92913589a055fc3d/snowflake_connector_python-3.12.4-cp39-cp39-macosx_11_0_x86_64.whl", hash = "sha256:de703efc36b9b12eab6d75dffeec362b0bbcc2f33ffd9913b0d178d2bf30d8cd", size = 971217 },
+    { url = "https://files.pythonhosted.org/packages/d7/8b/1333c9793293d884687951022edd0391ba320f7f9449cd3248a1adbc2042/snowflake_connector_python-3.12.4-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:5010cee09cfe20f72dbd9b1f3ee21d07fd280c03db243aa2c048708e7331f358", size = 2497476 },
+    { url = "https://files.pythonhosted.org/packages/26/8c/e5ec7a1659c19136f5fa5340b5127685dc5d33821562fe04816e4803bcaf/snowflake_connector_python-3.12.4-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:28be3b68e2b1d880373506eab4bae5b323d7de6215630585435ab60d3fea7feb", size = 2520599 },
+    { url = "https://files.pythonhosted.org/packages/12/a5/f2b9684e21afbaedc1dcc9ff5f66989154b389325ac91f4a1a66a6f93e46/snowflake_connector_python-3.12.4-cp39-cp39-win_amd64.whl", hash = "sha256:bc8766d16c98a75a57e65fb7697c6732b871309c2fa79698b54fb18cbd36733c", size = 918990 },
+]
+
+[package.optional-dependencies]
+secure-local-storage = [
+    { name = "keyring" },
+]
+
+[[package]]
+name = "sortedcontainers"
+version = "2.4.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e8/c4/ba2f8066cceb6f23394729afe52f3bf7adec04bf9ed2c820b39e19299111/sortedcontainers-2.4.0.tar.gz", hash = "sha256:25caa5a06cc30b6b83d11423433f65d1f9d76c4c6a0c90e3379eaa43b9bfdb88", size = 30594 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/32/46/9cb0e58b2deb7f82b84065f37f3bffeb12413f947f9388e4cac22c4621ce/sortedcontainers-2.4.0-py2.py3-none-any.whl", hash = "sha256:a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0", size = 29575 },
 ]
 
 [[package]]
@@ -3288,8 +3510,24 @@ wheels = [
 
 [[package]]
 name = "urllib3"
+version = "1.26.20"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version < '3.11'",
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e4/e8/6ff5e6bc22095cfc59b6ea711b687e2b7ed4bdb373f7eeec370a97d7392f/urllib3-1.26.20.tar.gz", hash = "sha256:40c2dc0c681e47eb8f90e7e27bf6ff7df2e677421fd46756da1161c39ca70d32", size = 307380 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/33/cf/8435d5a7159e2a9c83a95896ed596f68cf798005fe107cc655b5c5c14704/urllib3-1.26.20-py2.py3-none-any.whl", hash = "sha256:0ed14ccfbf1c30a9072c7ca157e4319b70d65f623e91e7b32fadb2853431016e", size = 144225 },
+]
+
+[[package]]
+name = "urllib3"
 version = "2.2.3"
 source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version == '3.11.*'",
+    "python_full_version >= '3.12'",
+]
 sdist = { url = "https://files.pythonhosted.org/packages/ed/63/22ba4ebfe7430b76388e7cd448d5478814d3032121827c12a2cc287e2260/urllib3-2.2.3.tar.gz", hash = "sha256:e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9", size = 300677 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ce/d9/5f4c13cecde62396b0d3fe530a50ccea91e7dfc1ccf0e09c228841bb5ba8/urllib3-2.2.3-py3-none-any.whl", hash = "sha256:ca899ca043dcb1bafa3e262d73aa25c465bfb49e0bd9dd5d59f1d0acba2f8fac", size = 126338 },

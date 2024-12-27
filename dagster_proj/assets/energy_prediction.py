@@ -7,8 +7,11 @@ from dagster import (
     MaterializeResult,
     MetadataValue,
     get_dagster_logger,
-    AssetExecutionContext
+    AssetExecutionContext,
+    EnvVar,
 )
+
+from ..utils import dynamic_query
 
 import numpy as np
 
@@ -24,13 +27,17 @@ from sklearn.ensemble import RandomForestRegressor
 
 logger = get_dagster_logger()
 
+DAGSTER_ENVIRONMENT = EnvVar("DAGSTER_ENVIRONMENT").get_value()
+
 
 @asset(
     deps=["fct_activities", "dim_activities"],
-    compute_kind="DuckDB",
-    required_resource_keys={"duckdb"},
+    compute_kind="Snowflake",
+    required_resource_keys={"database"},
 )
-def cycling_data(context: AssetExecutionContext): # duckdb matches the string, 'duckdb'defines in Definitions resource
+def cycling_data(
+    context: AssetExecutionContext,
+):  # duckdb matches the string, 'duckdb'defines in Definitions resource
     """Gets cycling data from DuckDB"""
     query = """
         select 
@@ -42,26 +49,33 @@ def cycling_data(context: AssetExecutionContext): # duckdb matches the string, '
             , weighted_average_watts
             , kilojoules
             , average_heartrate
-        from strava.fct_activities as fct
-        left join strava.dim_activities as dim
+        from dbt.fct_activities as fct
+        left join dbt.dim_activities as dim
             on fct.id = dim.id
         where sport_type = 'Cycling'
             and average_watts is not null
     """
-    with context.resources.duckdb.get_connection() as conn:
-        df = conn.execute(query).fetch_df()
-    logger.info(f"Size of data: {df.shape}")
+    df = dynamic_query(
+        dagster_environment=DAGSTER_ENVIRONMENT,
+        context=context,
+        query=query,
+    )
+
+    context.log.info(f"Size of data: {df.shape}")
+
     return df
+
 
 @asset_check(asset=cycling_data)
 def check_cycling_data_size(cycling_data):
     """Check that the cycling data has more than 1500 rows."""
     num_rows = cycling_data.shape[0]
-    passed = num_rows > 1500
+    num_cols = cycling_data.shape[1]
+    passed = num_rows > 1500 & num_cols == 8
     return AssetCheckResult(
-        passed=passed,
-        metadata={"num_rows": num_rows}
+        passed=passed, metadata={"num_rows": num_rows, "num_cols": num_cols}
     )
+
 
 @multi_asset(outs={"training_data": AssetOut(), "test_data": AssetOut()})
 def preprocess_data(cycling_data):
