@@ -181,7 +181,7 @@ def evaluate_model(trained_model, test_data):
         )
 
 @asset 
-def create_scatter_plot(context: AssetExecutionContext, results_df):
+def ml_results_scatter_plot(context: AssetExecutionContext, results_df):
 
     fig = go.Figure()
 
