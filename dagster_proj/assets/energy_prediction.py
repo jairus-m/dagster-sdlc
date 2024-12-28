@@ -182,10 +182,9 @@ def evaluate_model(trained_model, test_data):
 
 @asset 
 def create_scatter_plot(context: AssetExecutionContext, results_df):
-    # Create a scatter plot
+
     fig = go.Figure()
 
-    # Add scatter points for X_test
     fig.add_trace(go.Scatter(
         x=results_df.index,
         y=results_df.iloc[:, 0],
@@ -194,7 +193,6 @@ def create_scatter_plot(context: AssetExecutionContext, results_df):
         marker=dict(size=8)
     ))
 
-    # Add scatter points for y_pred
     fig.add_trace(go.Scatter(
         x=results_df.index,
         y=results_df['Predicted'],
@@ -203,7 +201,6 @@ def create_scatter_plot(context: AssetExecutionContext, results_df):
         marker=dict(color='red', size=10)
     ))
 
-    # Update layout
     fig.update_layout(
         title='Scatter Plot of X_test and Predicted Values',
         xaxis_title='Index',
@@ -212,16 +209,15 @@ def create_scatter_plot(context: AssetExecutionContext, results_df):
         template='plotly_white'
     )
 
-    # Define the path to save the HTML file
+    # path to save the HTML file
     save_chart_path = Path(context.instance.storage_directory()).joinpath("ml_results.html")
     
-    # Save the figure as an HTML file
-    fig.write_html(save_chart_path, auto_open=True)
+    # save the figure as an HTML file
+    fig.write_html(save_chart_path, auto_open=False)
 
-    # Add metadata to make the HTML file accessible from the Dagster UI
+    # add metadata to make the HTML file accessible from the Dagster UI
     context.add_output_metadata({
         "plot_url": MetadataValue.url("file://" + os.fspath(save_chart_path))
     })
 
-    # Show the plot
     return fig

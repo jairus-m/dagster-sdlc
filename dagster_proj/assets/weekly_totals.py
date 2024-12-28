@@ -48,23 +48,22 @@ def sport_type_totals(
 def sports_activity_dashboard(context: AssetExecutionContext, sport_type_totals):
     df = sport_type_totals
 
-    # Convert week_start to datetime
+    # week_start to datetime
     df['week_start'] = pd.to_datetime(df['week_start'])
 
-    # Get the most recent date in the dataset
     most_recent_date = df['week_start'].max()
 
-    # Filter for the last 8 weeks
+    # get the last 8 weeks
     eight_weeks_ago = most_recent_date - timedelta(weeks=7)
     df = df[df['week_start'] > eight_weeks_ago]
 
-    # Calculate total PRs and achievements
+    # totals
     total_prs = df['pr_count'].sum()
     total_achievements = df['achievement_count'].sum()
 
     pio.templates.default = "plotly"
 
-    # Create the dashboard
+    # main plotly dashboard
     fig = make_subplots(
         rows=4, cols=2,
         specs=[
@@ -157,23 +156,22 @@ def sports_activity_dashboard(context: AssetExecutionContext, sport_type_totals)
     fig.update_xaxes(title_text="Week", row=4, col=1)
     fig.update_yaxes(title_text="Number of Activities", row=4, col=1)
 
-    # Update layout
+    # final layout updates
     fig.update_layout(height=1200, width=1200, title_text="Sports Activity Dashboard (Last 8 Weeks)")
     fig.update_xaxes(title_text="Week", row=3, col=1)
     fig.update_yaxes(title_text="Hours", row=3, col=1)
     fig.update_xaxes(title_text="Week", row=2, col=2)
     fig.update_yaxes(title_text="Distance (miles)", row=2, col=2)
 
-    # Define the path to save the HTML file
+    # HTML file path to save
     save_chart_path = Path(context.instance.storage_directory()).joinpath("sports_activity_dashboard.html")
     
-    # Save the figure as an HTML file
-    fig.write_html(save_chart_path, auto_open=True)
+    # save file
+    fig.write_html(save_chart_path, auto_open=False)
 
-    # Add metadata to make the HTML file accessible from the Dagster UI
+    # this is needed to allow generated filepath to be accessible to UI
     context.add_output_metadata({
         "plot_url": MetadataValue.url("file://" + os.fspath(save_chart_path))
     })
 
-    # Return the figure object
     return fig
