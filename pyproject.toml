@@ -17,6 +17,7 @@ dependencies = [
     "dagster-cloud>=1.9.3",
     "dbt-snowflake>=1.8.4",
     "dagster-snowflake>=0.25.3",
+    "plotly>=5.24.1",
 ]
 
 [project.optional-dependencies]
