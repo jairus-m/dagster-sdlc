@@ -1,3 +1,6 @@
+import os
+from pathlib import Path
+
 from dagster import (
     asset,
     asset_check,
@@ -13,6 +16,7 @@ from dagster import (
 
 from ..utils import dynamic_query
 
+import pandas as pd
 import numpy as np
 
 from sklearn.model_selection import train_test_split
@@ -24,6 +28,8 @@ from sklearn.impute import IterativeImputer
 from sklearn.preprocessing import StandardScaler, FunctionTransformer
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.ensemble import RandomForestRegressor
+
+import plotly.graph_objects as go
 
 logger = get_dagster_logger()
 
@@ -153,7 +159,7 @@ def trained_model(training_data, random_forest_pipeline):
     return rf_pipeline
 
 
-@asset
+@multi_asset(outs={"results_df": AssetOut(), "model_evaluation": AssetOut()})
 def evaluate_model(trained_model, test_data):
     """Predict and evaluate on testing data"""
     X_test, y_test = test_data
@@ -163,6 +169,55 @@ def evaluate_model(trained_model, test_data):
     logger.info(f"Mean Squared Error: {mse}")
     logger.info(f"R-squared Score: {r2}")
 
-    return MaterializeResult(
-        metadata={"mse": MetadataValue.float(mse), "r2": MetadataValue.float(r2)}
+    results_df = pd.DataFrame(X_test)
+    results_df['Predicted'] = y_pred
+
+    return (
+            results_df,
+            MaterializeResult(
+                asset_key="model_evaluation",
+                metadata={"mse": MetadataValue.float(mse), "r2": MetadataValue.float(r2)}
+            )
+        )
+
+@asset 
+def ml_results_scatter_plot(context: AssetExecutionContext, results_df):
+    """Scatterplot of X_test and y_pred"""
+    fig = go.Figure()
+
+    fig.add_trace(go.Scatter(
+        x=results_df.index,
+        y=results_df.iloc[:, 0],
+        mode='markers',
+        name='X_test',
+        marker=dict(size=8)
+    ))
+
+    fig.add_trace(go.Scatter(
+        x=results_df.index,
+        y=results_df['Predicted'],
+        mode='markers',
+        name='Predicted',
+        marker=dict(color='red', size=10)
+    ))
+
+    fig.update_layout(
+        title='Scatter Plot of X_test and Predicted Values',
+        xaxis_title='Index',
+        yaxis_title='Values',
+        legend=dict(title='Legend'),
+        template='plotly_white'
     )
+
+    # path to save the HTML file
+    save_chart_path = Path(context.instance.storage_directory()).joinpath("ml_results.html")
+    
+    # save the figure as an HTML file
+    fig.write_html(save_chart_path, auto_open=False)
+
+    # add metadata to make the HTML file accessible from the Dagster UI
+    context.add_output_metadata({
+        "plot_url": MetadataValue.url("file://" + os.fspath(save_chart_path))
+    })
+
+    return fig

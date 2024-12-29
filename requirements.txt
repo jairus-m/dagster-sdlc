@@ -289,6 +289,7 @@ packaging==24.2
     #   dagster-dbt
     #   dbt-core
     #   dlt
+    #   plotly
     #   requirements-parser
     #   snowflake-connector-python
     #   streamlit
@@ -310,6 +311,8 @@ pillow==11.0.0
     # via streamlit
 platformdirs==4.3.6
     # via snowflake-connector-python
+plotly==5.24.1
+    # via dagster-proj (pyproject.toml)
 pluggy==1.5.0
     # via dlt
 ply==3.11
@@ -475,6 +478,7 @@ tabulate==0.9.0
 tenacity==9.0.0
     # via
     #   dlt
+    #   plotly
     #   streamlit
 text-unidecode==1.3
     # via python-slugify

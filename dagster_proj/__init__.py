@@ -1,17 +1,18 @@
-import os 
+import os
 
 from dagster import Definitions, load_assets_from_modules, EnvVar
 
-from .assets import activities, dbt, energy_prediction, asset_checks
+from .assets import activities, dbt, energy_prediction, weekly_totals, asset_checks
 from .resources import database_resource, dbt_resource, strava_api_resouce
 from .jobs import activities_update_job
 from .schedules import activities_update_schedule
 
-DAGSTER_ENVIRONMENT = EnvVar('DAGSTER_ENVIRONMENT').get_value()
+DAGSTER_ENVIRONMENT = EnvVar("DAGSTER_ENVIRONMENT").get_value()
 
 # load in assets from assets/
 activities_assets = load_assets_from_modules([activities])
 ml_assets = load_assets_from_modules([energy_prediction], group_name="ml_pipeline")
+dashboard_assets = load_assets_from_modules([weekly_totals], group_name="analytics")
 analytics_dbt_assets = load_assets_from_modules([dbt], group_name="dbt_duckdb")
 
 # load in jobs from jobs/
@@ -19,8 +20,12 @@ all_jobs = [activities_update_job]
 all_schedules = [activities_update_schedule]
 
 defs = Definitions(
-    assets=activities_assets + ml_assets + analytics_dbt_assets + ml_assets,
-    asset_checks=asset_checks, # defined in assets/__init__.py
+    assets=activities_assets
+    + ml_assets
+    + analytics_dbt_assets
+    + ml_assets
+    + dashboard_assets,
+    asset_checks=asset_checks,  # defined in assets/__init__.py
     resources={
         "database": database_resource[DAGSTER_ENVIRONMENT],
         "dbt": dbt_resource,
@@ -29,4 +34,3 @@ defs = Definitions(
     jobs=all_jobs,
     schedules=all_schedules,
 )
-
