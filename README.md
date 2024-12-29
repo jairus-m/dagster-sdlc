@@ -9,13 +9,10 @@ Utilizing dltHub, dbt, + dagster as a framework for developing data products wit
 While the short-term goal is to learn these tools, the greater goal is to understand and flesh out what the full development and deployment cycle can look like for orchestrating a data platform and deploying custom pipelines. There is a great process using dbt where we have local development, testing, versioning/branching, CICD, code-review, separation of dev and prod, project structure/cohesion etc., but how can we apply that to the entire data platform and espeacially, the 10-20% of ingestion jobs that cannot be done in a managed tool like Airbyte and/or is best done using a custom solution?
 
 # Current Status
-<img width="1512" alt="Screenshot 2024-12-13 at 11 00 14 PM" src="https://github.com/user-attachments/assets/a29f1da9-2d6c-46f7-b3ed-3ed6679c88e0" />
+<img width="1400" alt="Screenshot 2024-12-29 at 9 28 52 AM" src="https://github.com/user-attachments/assets/b648c30c-3452-443b-8d1a-a54bfa236df8" />
 
-- Built a dltHub EL pipeline via the RESTAPIConfig class in `dagster_proj/assets/activities.py`
-  - Declaratively extracts my raw activity data from Strava's REST API and loads it into DuckDB
-  - Created a custom configurable resource for Strava API - https://github.com/jairus-m/dagster-dlt/pull/5, https://github.com/jairus-m/dagster-dlt/pull/11
-- Built a dbt-core project to transform the activities data in `analytics_dbt/models`
-- Orchestrated ingest, transformation, and downstream dependecies (ML) with Dagster - https://github.com/jairus-m/dagster-dlt/pull/2, https://github.com/jairus-m/dagster-dlt/pull/6
+### Dagster
+- Orchestrated ingest, transformation, and downstream dependecies (ML/Analytics) with Dagster - https://github.com/jairus-m/dagster-dlt/pull/2, https://github.com/jairus-m/dagster-dlt/pull/6
   - Developed in dev environment and materaizlied in `dagster dev` server
   - Configured resources / credentials in a root `.env` file
   - Current Dagster folder structure (dependencies managed by UV)
@@ -26,17 +23,27 @@ While the short-term goal is to learn these tools, the greater goal is to unders
       - Schedules: `dagster_proj/schedules/__init__.py`
       - Definitions: `dagster_proj/__init__.py`
     - The structure is experimental and based on the DagsterU courses
+### dltHub
+- Built a dltHub EL pipeline via the RESTAPIConfig class in `dagster_proj/assets/activities.py`
+  - Declaratively extracts my raw activity data from Strava's REST API and loads it into DuckDB
+  - Created a custom configurable resource for Strava API - https://github.com/jairus-m/dagster-dlt/pull/5, https://github.com/jairus-m/dagster-dlt/pull/11
+### dbt-core
+- Built a dbt-core project to transform the activities data in `analytics_dbt/models`
+### Sklearn ML Pipeline
 - Created an Sklearn ML pipeline to predict energy expenditure for a given cycling activity
   - WIP but the general flow of preprocessing, building the ML model, training, testing/evaluation, and prediction can be found in `dagster_proj/assets/energy_prediction.py`
   - This a downstream dependency of a dbt asset materialized in duckdb
+### Analytics
+- Created a Plotly analytics dashboard + an ML results related visulization - https://github.com/jairus-m/dagster-dlt/pull/14
+  - In `dagster_proj/assets/weekly_totals.py` 
 
 ## Deployment Status
-- Officially Deployed this project to Dagster+ !!!
+- Deployed this project to Dagster+ 
   - CICD w/ branching deployments for every PR
 - Seperated execution environments - https://github.com/jairus-m/dagster-dlt/pull/13
-  - dev
-  - branch
-  - prod
+  - dev (DuckDB)
+  - branch (Snowflake)
+  - prod (Snowflake)
 - Added `ruff` Python linter - https://github.com/jairus-m/dagster-dlt/pull/8
 - Astral `uv` for Python dependency management - https://github.com/jairus-m/dagster-dlt/pull/1
 
@@ -44,7 +51,7 @@ While the short-term goal is to learn these tools, the greater goal is to unders
 - Add unit tests
 - Add additional CI checks to run unit tests, Python linting, etc
 - Beef up the ML pipeline with `dagster-mlflow` for experiment tracking, model versioning, better model observability, etc
-- Add new Strava end points / dbt models / downstream analytics assets
+- Add new Strava end points
 - Implement partitions/backfilling with dlt/Dagster
 
 # Getting Started:
