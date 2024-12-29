@@ -85,7 +85,7 @@ def sports_activity_dashboard(context: AssetExecutionContext, sport_type_totals)
         go.Indicator(
             mode="number",
             value=total_prs,
-            title={"text": "Total PRs", "font": {"size": 20}},
+            # title={"text": "Total PRs", "font": {"size": 20}},
             number={"font": {"size": 40}},
             domain={"row": 0, "column": 0}
         ),
@@ -97,7 +97,7 @@ def sports_activity_dashboard(context: AssetExecutionContext, sport_type_totals)
         go.Indicator(
             mode="number",
             value=total_achievements,
-            title={"text": "Total Achievements", "font": {"size": 20}},
+            # title={"text": "Total Achievements", "font": {"size": 20}},
             number={"font": {"size": 40}},
             domain={"row": 0, "column": 1}
         ),
@@ -157,7 +157,7 @@ def sports_activity_dashboard(context: AssetExecutionContext, sport_type_totals)
     fig.update_yaxes(title_text="Number of Activities", row=4, col=1)
 
     # final layout updates
-    fig.update_layout(height=1200, width=1200, title_text="Sports Activity Dashboard (Last 8 Weeks)")
+    fig.update_layout(height=1200, width=1200, title_text="Activity Totals (Last 8 Weeks)")
     fig.update_xaxes(title_text="Week", row=3, col=1)
     fig.update_yaxes(title_text="Hours", row=3, col=1)
     fig.update_xaxes(title_text="Week", row=2, col=2)
