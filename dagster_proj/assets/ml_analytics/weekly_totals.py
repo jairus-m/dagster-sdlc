@@ -1,5 +1,5 @@
 import os
-from datetime import datetime, timedelta
+from datetime import timedelta
 from pathlib import Path
 
 from dagster import (
@@ -15,7 +15,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import plotly.io as pio
 
-from ..utils import dynamic_query
+from dagster_proj.utils import dynamic_query
 
 DAGSTER_ENVIRONMENT = EnvVar("DAGSTER_ENVIRONMENT").get_value()
 
