@@ -14,7 +14,7 @@ from dagster import (
     EnvVar,
 )
 
-from ..utils import dynamic_query
+from dagster_proj.utils import dynamic_query
 
 import pandas as pd
 import numpy as np
@@ -23,7 +23,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.linear_model import LinearRegression
-from sklearn.experimental import enable_iterative_imputer
+from sklearn.experimental import enable_iterative_imputer # noqa: F401
 from sklearn.impute import IterativeImputer
 from sklearn.preprocessing import StandardScaler, FunctionTransformer
 from sklearn.metrics import mean_squared_error, r2_score

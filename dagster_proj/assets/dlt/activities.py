@@ -10,8 +10,8 @@ from dlt.sources.rest_api import RESTAPIConfig, rest_api_resources
 
 import pendulum
 
-from ..resources import StravaAPIResource
-from ..utils import dynamic_write_dlt
+from ...resources import StravaAPIResource
+from ...utils import dynamic_write_dlt
 
 logger = get_dagster_logger()
 

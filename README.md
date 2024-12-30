@@ -24,18 +24,18 @@ While the short-term goal is to learn these tools, the greater goal is to unders
       - Definitions: `dagster_proj/__init__.py`
     - The structure is experimental and based on the DagsterU courses
 ### dltHub
-- Built a dltHub EL pipeline via the RESTAPIConfig class in `dagster_proj/assets/activities.py`
+- Built a dltHub EL pipeline via the RESTAPIConfig class in `dagster_proj/assets/dlt/activities.py`
   - Declaratively extracts my raw activity data from Strava's REST API and loads it into DuckDB
   - Created a custom configurable resource for Strava API - https://github.com/jairus-m/dagster-dlt/pull/5, https://github.com/jairus-m/dagster-dlt/pull/11
 ### dbt-core
 - Built a dbt-core project to transform the activities data in `analytics_dbt/models`
 ### Sklearn ML Pipeline
 - Created an Sklearn ML pipeline to predict energy expenditure for a given cycling activity
-  - WIP but the general flow of preprocessing, building the ML model, training, testing/evaluation, and prediction can be found in `dagster_proj/assets/energy_prediction.py`
+  - WIP but the general flow of preprocessing, building the ML model, training, testing/evaluation, and prediction can be found in `dagster_proj/assets/ml_analytics/energy_prediction.py`
   - This a downstream dependency of a dbt asset materialized in duckdb
 ### Analytics
 - Created a Plotly analytics dashboard + an ML results related visulization - https://github.com/jairus-m/dagster-dlt/pull/14
-  - In `dagster_proj/assets/weekly_totals.py` 
+  - In `dagster_proj/assets/ml_analytics/weekly_totals.py` 
 
 ## Deployment Status
 - Deployed this project to Dagster+ 
