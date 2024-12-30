@@ -5,6 +5,7 @@ env:
   CLIENT_ID: '12345'
   CLIENT_SECRET: '1234abc'
   REFRESH_TOKEN: '1234abc'
+  DAGSTER_ENVIRONMENT: 'branch'
 
 jobs:
   lock_file:
