@@ -24,7 +24,8 @@ dependencies = [
 dev = [
     "dagster-webserver", 
     "pytest",
-    "ruff"
+    "ruff",
+    "pre-commit"
 ]
 
 [build-system]
