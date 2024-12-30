@@ -15,7 +15,7 @@ While the short-term goal is to learn these tools, the greater goal is to unders
 - Orchestrated ingest, transformation, and downstream dependecies (ML/Analytics) with Dagster - https://github.com/jairus-m/dagster-dlt/pull/2, https://github.com/jairus-m/dagster-dlt/pull/6
   - Developed in dev environment and materaizlied in `dagster dev` server
   - Configured resources / credentials in a root `.env` file
-  - Current Dagster folder structure (dependencies managed by UV)
+  - Current Dagster folder structure (dependencies managed by UV) - https://github.com/jairus-m/dagster-dlt/pull/15
     - One code location: `dagster_proj/` 
       - Assets: `dagster_proj/assets/`
       - Resources: `dagster_proj/resources/__init__.py`
