@@ -1,5 +1,11 @@
 name: uv ci
 on: [pull_request]
+
+env:
+  CLIENT_ID: '12345'
+  CLIENT_SECRET: '1234abc'
+  REFRESH_TOKEN: '1234abc'
+
 jobs:
   lock_file:
     runs-on: ubuntu-latest
