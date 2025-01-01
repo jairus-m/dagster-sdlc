@@ -25,7 +25,8 @@ dev = [
     "dagster-webserver", 
     "pytest",
     "ruff",
-    "pre-commit"
+    "pre-commit",
+    "debugpy"
 ]
 
 [build-system]
