@@ -23,7 +23,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.linear_model import LinearRegression
-from sklearn.experimental import enable_iterative_imputer # noqa: F401
+from sklearn.experimental import enable_iterative_imputer  # noqa: F401
 from sklearn.impute import IterativeImputer
 from sklearn.preprocessing import StandardScaler, FunctionTransformer
 from sklearn.metrics import mean_squared_error, r2_score
@@ -170,54 +170,61 @@ def evaluate_model(trained_model, test_data):
     logger.info(f"R-squared Score: {r2}")
 
     results_df = pd.DataFrame(X_test)
-    results_df['Predicted'] = y_pred
+    results_df["Predicted"] = y_pred
 
     return (
-            results_df,
-            MaterializeResult(
-                asset_key="model_evaluation",
-                metadata={"mse": MetadataValue.float(mse), "r2": MetadataValue.float(r2)}
-            )
-        )
+        results_df,
+        MaterializeResult(
+            asset_key="model_evaluation",
+            metadata={"mse": MetadataValue.float(mse), "r2": MetadataValue.float(r2)},
+        ),
+    )
 
-@asset 
+
+@asset
 def ml_results_scatter_plot(context: AssetExecutionContext, results_df):
     """Scatterplot of X_test and y_pred"""
     fig = go.Figure()
 
-    fig.add_trace(go.Scatter(
-        x=results_df.index,
-        y=results_df.iloc[:, 0],
-        mode='markers',
-        name='X_test',
-        marker=dict(size=8)
-    ))
+    fig.add_trace(
+        go.Scatter(
+            x=results_df.index,
+            y=results_df.iloc[:, 0],
+            mode="markers",
+            name="X_test",
+            marker=dict(size=8),
+        )
+    )
 
-    fig.add_trace(go.Scatter(
-        x=results_df.index,
-        y=results_df['Predicted'],
-        mode='markers',
-        name='Predicted',
-        marker=dict(color='red', size=10)
-    ))
+    fig.add_trace(
+        go.Scatter(
+            x=results_df.index,
+            y=results_df["Predicted"],
+            mode="markers",
+            name="Predicted",
+            marker=dict(color="red", size=10),
+        )
+    )
 
     fig.update_layout(
-        title='Scatter Plot of X_test and Predicted Values',
-        xaxis_title='Index',
-        yaxis_title='Values',
-        legend=dict(title='Legend'),
-        template='plotly_white'
+        title="Scatter Plot of X_test and Predicted Values",
+        xaxis_title="Index",
+        yaxis_title="Values",
+        legend=dict(title="Legend"),
+        template="plotly_white",
     )
 
     # path to save the HTML file
-    save_chart_path = Path(context.instance.storage_directory()).joinpath("ml_results.html")
-    
+    save_chart_path = Path(context.instance.storage_directory()).joinpath(
+        "ml_results.html"
+    )
+
     # save the figure as an HTML file
     fig.write_html(save_chart_path, auto_open=False)
 
     # add metadata to make the HTML file accessible from the Dagster UI
-    context.add_output_metadata({
-        "plot_url": MetadataValue.url("file://" + os.fspath(save_chart_path))
-    })
+    context.add_output_metadata(
+        {"plot_url": MetadataValue.url("file://" + os.fspath(save_chart_path))}
+    )
 
     return fig

@@ -1,6 +1,7 @@
 from dagster import ConfigurableResource
 import requests
 
+
 class StravaAPIResource(ConfigurableResource):
     client_id: str
     client_secret: str

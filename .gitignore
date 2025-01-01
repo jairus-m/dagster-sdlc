@@ -8,3 +8,4 @@ __pyache__
 .ruff_cache
 .DS_Store
 data/
+pytest.ini

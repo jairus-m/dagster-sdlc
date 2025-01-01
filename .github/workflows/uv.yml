@@ -1,0 +1,45 @@
+name: uv ci
+on: [pull_request]
+
+env:
+  CLIENT_ID: '12345'
+  CLIENT_SECRET: '1234abc'
+  REFRESH_TOKEN: '1234abc'
+  DAGSTER_ENVIRONMENT: 'branch'
+
+jobs:
+  lock_file:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: uv lock --locked 
+  linting:
+      runs-on: ubuntu-latest
+      needs: [lock_file]
+      steps:
+        - uses: actions/checkout@v4
+        - uses: ./.github/actions/setup
+        - run: uvx ruff check .
+  formatting:
+    runs-on: ubuntu-latest
+    needs: [lock_file]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: uvx ruff format --check .
+  tests:
+    runs-on: ubuntu-latest
+    needs: [lock_file]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: uv add --dev pytest
+      - run: uv run pytest --disable-warnings # run unit tests without warnings
+  build:
+    runs-on: ubuntu-latest
+    needs: [linting, formatting, tests]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: uv build # build the package

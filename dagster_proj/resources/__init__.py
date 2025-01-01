@@ -25,9 +25,9 @@ strava_api_resouce = StravaAPIResource(
 )
 
 snowflake_instance = SnowflakeResource(
-    account=EnvVar("DESTINATION__SNOWFLAKE__CREDENTIALS__HOST"),  
-    user=EnvVar("DESTINATION__SNOWFLAKE__CREDENTIALS__USERNAME"),  
-    password=EnvVar("DESTINATION__SNOWFLAKE__CREDENTIALS__PASSWORD"),  
+    account=EnvVar("DESTINATION__SNOWFLAKE__CREDENTIALS__HOST"),
+    user=EnvVar("DESTINATION__SNOWFLAKE__CREDENTIALS__USERNAME"),
+    password=EnvVar("DESTINATION__SNOWFLAKE__CREDENTIALS__PASSWORD"),
     role=EnvVar("DESTINATION__SNOWFLAKE__CREDENTIALS__ROLE"),
     database=EnvVar("DESTINATION__SNOWFLAKE__CREDENTIALS__DATABASE"),
     warehouse=EnvVar("DESTINATION__SNOWFLAKE__CREDENTIALS__WAREHOUSE"),
@@ -35,7 +35,7 @@ snowflake_instance = SnowflakeResource(
 
 # will use Dagster env to choose
 database_resource = {
-    'dev': duckdb_resource,
-    'branch': snowflake_instance,
-    'prod': snowflake_instance
+    "dev": duckdb_resource,
+    "branch": snowflake_instance,
+    "prod": snowflake_instance,
 }

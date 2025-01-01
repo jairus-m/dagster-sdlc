@@ -76,7 +76,7 @@ def load_strava_activities(context: AssetExecutionContext):
         dagster_environment=DAGSTER_ENVIRONMENT,
         duckdb_database_path=DUCKDB_DATABASE_PATH,
         pipeline_name="strava_rest_api_config",
-        dataset_name="strava_data" # schema in dwh
+        dataset_name="strava_data",  # schema in dwh
     )
 
     source = strava_rest_api_config(context.resources.strava)
