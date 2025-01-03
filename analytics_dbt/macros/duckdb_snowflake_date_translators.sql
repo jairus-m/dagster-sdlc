@@ -1,15 +1,15 @@
 {# 
-  This macro casts a timestamp into a date.
+  This macro casts a timestamp into time.
   It supports DuckDB and Snowflake.
 
   Args:
     timestamp (str): The timestamp to format.
 
   Returns:
-    date: 'YYYY-12-29'
+    time: 'HH:MM:SS'
 
   Example:
-    {{ get_date('my_timestamp') }}
+    {{ get_time('my_timestamp') }}
 #}
 {% macro get_time(timestamp) %}
   {% if target.type == 'duckdb' %}
@@ -21,14 +21,14 @@
   {% endif %}
 {% endmacro %}
 {# 
-  This macro casts a timestamp into a time.
+  This macro casts a timestamp into a date.
   It supports DuckDB and Snowflake.
 
   Args:
     timestamp (str): The timestamp to format.
 
   Returns:
-    date: 'YYYY-12-29'
+    date: 'YYYY-MM-DD'
 
   Example:
     {{ get_date('my_timestamp') }}
