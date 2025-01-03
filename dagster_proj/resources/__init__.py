@@ -18,7 +18,7 @@ duckdb_resource = DuckDBResource(
     database=EnvVar("DUCKDB_DATABASE"),
 )
 
-strava_api_resouce = StravaAPIResource(
+strava_api_resource = StravaAPIResource(
     client_id=EnvVar("CLIENT_ID").get_value(),
     client_secret=EnvVar("CLIENT_SECRET").get_value(),
     refresh_token=EnvVar("REFRESH_TOKEN").get_value(),
