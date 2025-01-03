@@ -4,8 +4,8 @@ with src_activities AS (
 )
 
 select  
-  {{ strftime('start_date_local::timestamp', "'%m-%d-%Y'") }} as date,
-  {{ strftime('start_date_local::timestamp', "'%H:%M:%S %p'") }} as time,
+  {{ get_date('start_date::timestamp') }} as date,
+  {{ get_time('start_date::timestamp') }} as time,
   name,
   (distance * 0.000621371) AS distance_miles,
   (moving_time / 60) AS moving_time_minutes,
@@ -35,12 +35,12 @@ select
   (elev_high * 3.28084) AS elev_high_feet,
   (elev_low * 3.28084) AS elev_low_feet,
   case
-    when {{ date_part('hour', 'start_date_local::timestamp') }} between 0 AND 3 then '12am-4am'
-    when {{ date_part('hour', 'start_date_local::timestamp') }} between 4 AND 7 then '4am-8am'
-    when {{ date_part('hour', 'start_date_local::timestamp') }} between 8 AND 11 then '8am-12pm'
-    when {{ date_part('hour', 'start_date_local::timestamp') }} between 12 AND 15 then '12pm-4pm'
-    when {{ date_part('hour', 'start_date_local::timestamp') }} between 16 AND 19 then '4pm-8pm'
-    when {{ date_part('hour', 'start_date_local::timestamp') }} between 20 AND 23 then '8pm-12am'
+    when {{ date_part('hour', 'start_date::timestamp') }} between 0 AND 3 then '12am-4am'
+    when {{ date_part('hour', 'start_date::timestamp') }} between 4 AND 7 then '4am-8am'
+    when {{ date_part('hour', 'start_date::timestamp') }} between 8 AND 11 then '8am-12pm'
+    when {{ date_part('hour', 'start_date::timestamp') }} between 12 AND 15 then '12pm-4pm'
+    when {{ date_part('hour', 'start_date::timestamp') }} between 16 AND 19 then '4pm-8pm'
+    when {{ date_part('hour', 'start_date::timestamp') }} between 20 AND 23 then '8pm-12am'
     else 'Other'
   end as time_bin,
   case 
@@ -48,11 +48,11 @@ select
     when sport_type = 'Run' then 'Running'
     else 'Other'
   end as sport_type,
-  {{ date_trunc('week', strptime('date', "'%m-%d-%Y'")) }} AS week_start, 
-  {{ date_part('dow', strptime('date', "'%m-%d-%Y'")) }} + 1 AS day_of_week_num,
-  {{ strftime(strptime('date', "'%m-%d-%Y'"), "'%A'") }} AS day_of_week, 
-  {{ date_part('week', strptime('date', "'%m-%d-%Y'")) }} AS week_num, 
-  {{ date_part('month', strptime('date', "'%m-%d-%Y'")) }} AS month_num, 
-  {{ strftime(strptime('date', "'%m-%d-%Y'"), "'%B'") }} AS month   
+  {{ date_trunc('week', 'date') }} AS week_start,
+  {{ date_part('dow', 'date') }} + 1 AS day_of_week_num,
+  {{ strftime('date', "'%A'") }} AS day_of_week,  
+  {{ date_part('week','date') }} AS week_num, 
+  {{ date_part('month', 'date') }} AS month_num,  
+  {{ strftime('date', "'%B'") }} AS month
 from src_activities
 order by start_date_local desc
