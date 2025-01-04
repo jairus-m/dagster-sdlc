@@ -1,4 +1,48 @@
 {# 
+  This macro casts a timestamp into time.
+  It supports DuckDB and Snowflake.
+
+  Args:
+    timestamp (str): The timestamp to format.
+
+  Returns:
+    time: 'HH:MM:SS'
+
+  Example:
+    {{ get_time('my_timestamp') }}
+#}
+{% macro get_time(timestamp) %}
+  {% if target.type == 'duckdb' %}
+    cast({{ timestamp }}::timestamp as time)
+  {% elif target.type == 'snowflake' %}
+    to_time({{ timestamp }}::timestamp)
+  {% else %}
+    {{ exceptions.raise_compiler_error("Unsupported database type: " ~ target.type) }}
+  {% endif %}
+{% endmacro %}
+{# 
+  This macro casts a timestamp into a date.
+  It supports DuckDB and Snowflake.
+
+  Args:
+    timestamp (str): The timestamp to format.
+
+  Returns:
+    date: 'YYYY-MM-DD'
+
+  Example:
+    {{ get_date('my_timestamp') }}
+#}
+{% macro get_date(timestamp) %}
+  {% if target.type == 'duckdb' %}
+    cast({{ timestamp }}::timestamp as date)
+  {% elif target.type == 'snowflake' %}
+    date({{ timestamp }}::timestamp)
+  {% else %}
+    {{ exceptions.raise_compiler_error("Unsupported database type: " ~ target.type) }}
+  {% endif %}
+{% endmacro %}
+{# 
   This macro formats a timestamp into a string based on the specified format.
   It supports DuckDB and Snowflake.
 
