@@ -1,13 +1,13 @@
 # The Analytics Development Lifecycle within a Modern Data Engineering Framework
 
-Utilizing dltHub, dbt, + dagster as a framework for developing data products with software engineering best practices. 
+Utilizing dltHub, dbt, + Dagster as a framework for developing data products with software engineering best practices. 
 
 ![Slide1](https://github.com/user-attachments/assets/4f0025b5-c203-424f-96a6-5be81f61c844)
 
-While the short-term goal is to learn these tools, the greater goal is to understand and flesh out what the full development and deployment cycle can look like for orchestrating a data platform and deploying custom pipelines. There is a great process using dbt where we have local development, testing, versioning/branching, CICD, code-review, separation of dev and prod, project structure/cohesion etc., but how can we apply that to the entire data platform and espeacially, the 10-20% of ingestion jobs that cannot be done in a managed tool like Airbyte and/or is best done using a custom solution?
+While the short-term goal is to learn these tools, the greater goal is to understand and flesh out what the full development and deployment cycle can look like for orchestrating a data platform and deploying custom pipelines. There is a great process in the transformation layer using dbt where we have local development, testing, versioning/branching, CICD, code-review, separation of dev and prod, project structure/cohesion etc., but how can we apply that to the entire data platform and espeacially, the 10-20% of ingestion jobs that cannot be done in a managed tool like Airbyte and/or is best done using a custom solution?
 
 # Current Status
-<img width="1400" alt="Screenshot 2024-12-29 at 9 28 52 AM" src="https://github.com/user-attachments/assets/b648c30c-3452-443b-8d1a-a54bfa236df8" />
+<img width="1317" alt="Screenshot 2025-01-05 at 11 51 00 AM" src="https://github.com/user-attachments/assets/a40c230d-1634-46ca-9210-d7847f487323" />
 
 ### Dagster
 - Orchestrated ingest, transformation, and downstream dependecies (ML/Analytics) with Dagster - https://github.com/jairus-m/dagster-dlt/pull/2, https://github.com/jairus-m/dagster-dlt/pull/6
@@ -24,7 +24,8 @@ While the short-term goal is to learn these tools, the greater goal is to unders
     - The structure is experimental and based on the DagsterU courses
 ### dltHub
 - Built a dltHub EL pipeline via the RESTAPIConfig class in `dagster_proj/assets/dlt/activities.py`
-  - Declaratively extracts my raw activity data from Strava's REST API and loads it into DuckDB
+  - Declaratively extracts my raw activity/stats data from Strava's REST API and loads it into DuckDB/Snowflake
+    - Added mulitple Strava endpoints - https://github.com/jairus-m/dagster-dlt/pull/18
   - Created a custom configurable resource for Strava API - https://github.com/jairus-m/dagster-dlt/pull/5, https://github.com/jairus-m/dagster-dlt/pull/11
 ### dbt-core
 - Built a dbt-core project to transform the activities data in `analytics_dbt/models`
