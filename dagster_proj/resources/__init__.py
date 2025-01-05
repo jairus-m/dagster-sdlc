@@ -22,6 +22,7 @@ strava_api_resource = StravaAPIResource(
     client_id=EnvVar("CLIENT_ID").get_value(),
     client_secret=EnvVar("CLIENT_SECRET").get_value(),
     refresh_token=EnvVar("REFRESH_TOKEN").get_value(),
+    athlete_id=22152127,
 )
 
 snowflake_instance = SnowflakeResource(

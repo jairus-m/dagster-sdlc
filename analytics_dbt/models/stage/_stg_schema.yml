@@ -12,3 +12,5 @@ sources:
             tests:
               - unique
               - not_null
+      - name: stats
+        description: Athlete stats data for YTD and monthly totals

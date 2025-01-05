@@ -6,6 +6,7 @@ class StravaAPIResource(ConfigurableResource):
     client_id: str
     client_secret: str
     refresh_token: str
+    athlete_id: int
     _access_token: str = None
 
     def get_access_token(self) -> str:
