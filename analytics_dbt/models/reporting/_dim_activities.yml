@@ -1,0 +1,49 @@
+version: 2
+
+models:
+  - name: dim_activities
+    description: Model derived from src_activities with additional time-based columns
+    columns:
+      - name: id
+        description: Primary key for the activity
+        data_tests:
+          - unique
+          - not_null
+
+      - name: name
+        description: '{{ doc("name") }}'
+
+      - name: has_heartrate
+        description: '{{ doc("has_heartrate") }}'
+
+      - name: private
+        description: '{{ doc("private") }}'
+
+      - name: visibility
+        description: '{{ doc("visibility") }}'
+
+      - name: all_sport_types
+        description: values=['Run', 'VirtualRide', 'Ride', 'MountainBikeRide', 'Swimming', 'Rock Climb', etc]
+
+      - name: sport_type
+        data_tests:
+          - accepted_values: 
+              values: ['Cycling', 'Running', 'Other']
+
+      - name: week_start
+        description: Start date of the week for this activity
+
+      - name: day_of_week_num
+        description: Numeric representation of the day of the week (1-7)
+
+      - name: day_of_week
+        description: Name of the day of the week
+
+      - name: week_num
+        description: Week number within the year
+
+      - name: month_num
+        description: Numeric representation of the month (1-12)
+
+      - name: month
+        description: Name of the month

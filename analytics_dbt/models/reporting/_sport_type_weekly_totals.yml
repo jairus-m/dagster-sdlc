@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: sport_type_weekly_totals
+    description: Aggregated metrics by sport type per week
+    columns:
+      - name: week_start
+        description: The start date of the week for which the activities are summarized
+
+      - name: sport_type
+        description: The type of sport or activity (e.g. Running, Cycling, Other)
+
+      - name: num_activities
+        description: The total number of activities for the given week and sport type
+
+      - name: distance_miles
+        description: The total distance covered in miles for all activities in the week
+
+      - name: moving_time_minutes
+        description: The total time spent moving (active time) in minutes for all activities in the week
+
+      - name: elapsed_time_minutes
+        description: The total elapsed time in minutes for all activities in the week, including stops
+
+      - name: total_elevation_gain_feet
+        description: The total elevation gain in feet for all activities in the week
+
+      - name: achievement_count
+        description: The total number of achievements earned across all activities in the week
+
+      - name: kudos_count
+        description: The total number of kudos received across all activities in the week
+
+      - name: comment_count
+        description: The total number of comments received across all activities in the week
+
+      - name: pr_count
+        description: The total number of personal records (PRs) set across all activities in the week

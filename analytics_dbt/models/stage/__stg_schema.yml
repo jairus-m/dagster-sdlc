@@ -5,7 +5,7 @@ sources:
     schema: strava_data
     tables:
       - name: activities
-        description: Source data containing all activities and fields
+        description: Raw source data containing all activities and fields
         columns:
           - name: id
             description: Unique ID for each Strava activity
@@ -13,4 +13,4 @@ sources:
               - unique
               - not_null
       - name: stats
-        description: Athlete stats data for YTD and monthly totals
+        description: Raw athlete stats data for YTD and monthly totals
