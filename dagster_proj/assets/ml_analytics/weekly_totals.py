@@ -46,7 +46,7 @@ def sport_type_totals(
     return df
 
 
-@asset
+@asset(kinds={"plotly"})
 def sports_activity_dashboard(context: AssetExecutionContext, sport_type_totals):
     df = sport_type_totals
 
