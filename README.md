@@ -49,7 +49,7 @@ While the short-term goal is to learn these tools, the greater goal is to unders
 
 ## TODO:
 - Beef up the ML pipeline with `dagster-mlflow` for experiment tracking, model versioning, better model observability, etc
-- Add new Strava end points
+- Utilize Snowflake Cloning/dbt Slim CI for CI
 - Implement partitions/backfilling with dlt/Dagster
 
 # Getting Started:
