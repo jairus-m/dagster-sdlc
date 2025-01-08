@@ -96,6 +96,7 @@ def strava_rest_api_config(strava_resource: StravaAPIResource):
     },
     group_name="dltHub",
     required_resource_keys={"strava"},
+    compute_kind="dlt",
 )
 def load_strava_activities(context: AssetExecutionContext):
     """

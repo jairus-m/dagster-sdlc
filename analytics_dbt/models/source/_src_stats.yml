@@ -1,0 +1,155 @@
+version: 2
+
+models:
+  - name: src_stats
+    description: This model contains various athletic activity statistics, including totals for rides, runs, and swims, with unit conversions applied. It also includes recent 4-week totals.
+    columns:
+      - name: all_ride_totals__count
+        description: Total count of all rides
+
+      - name: all_ride_totals__distance_miles
+        description: Total distance of all rides in miles
+
+      - name: all_ride_totals__elapsed_time_days
+        description: Total elapsed time of all rides in days
+
+      - name: all_ride_totals__elevation_gain_miles
+        description: Total elevation gain of all rides in miles
+
+      - name: all_ride_totals__moving_time_days
+        description: Total moving time of all rides in days
+
+      - name: all_run_totals__count
+        description: Total count of all runs
+
+      - name: all_run_totals__distance_miles
+        description: Total distance of all runs in miles
+
+      - name: all_run_totals__elapsed_time_days
+        description: Total elapsed time of all runs in days
+
+      - name: all_run_totals__elevation_gain_miles
+        description: Total elevation gain of all runs in miles
+
+      - name: all_run_totals__moving_time_days
+        description: Total moving time of all runs in days
+
+      - name: all_swim_totals__count
+        description: Total count of all swims
+
+      - name: all_swim_totals__distance_miles
+        description: Total distance of all swims in miles
+
+      - name: all_swim_totals__elapsed_time_hours
+        description: Total elapsed time of all swims in hours
+
+      - name: all_swim_totals__elevation_gain_feet
+        description: Total elevation gain of all swims in feet
+
+      - name: all_swim_totals__moving_time_hours
+        description: Total moving time of all swims in hours
+
+      - name: biggest_climb_elevation_gain_feet
+        description: Elevation gain of the biggest climb in feet
+
+      - name: biggest_ride_distance_miles
+        description: Distance of the biggest ride in miles
+
+      - name: recent_ride_totals__achievement_count
+        description: Achievement count for rides in the last 4 weeks
+
+      - name: recent_ride_totals__count
+        description: Count of rides in the last 4 weeks
+
+      - name: recent_ride_totals__distance_miles
+        description: Total distance of rides in the last 4 weeks in miles
+
+      - name: recent_ride_totals__elapsed_time_hours
+        description: Total elapsed time of rides in the last 4 weeks in hours
+
+      - name: recent_ride_totals__elevation_gain_feet
+        description: Total elevation gain of rides in the last 4 weeks in feet
+
+      - name: recent_ride_totals__moving_time_hours
+        description: Total moving time of rides in the last 4 weeks in hours
+
+      - name: recent_run_totals__achievement_count
+        description: Achievement count for runs in the last 4 weeks
+
+      - name: recent_run_totals__count
+        description: Count of runs in the last 4 weeks
+
+      - name: recent_run_totals__distance_miles
+        description: Total distance of runs in the last 4 weeks in miles
+
+      - name: recent_run_totals__elapsed_time_hours
+        description: Total elapsed time of runs in the last 4 weeks in hours
+
+      - name: recent_run_totals__elevation_gain_feet
+        description: Total elevation gain of runs in the last 4 weeks in feet
+
+      - name: recent_run_totals__moving_time_hours
+        description: Total moving time of runs in the last 4 weeks in hours
+
+      - name: recent_swim_totals__achievement_count
+        description: Achievement count for swims in the last 4 weeks
+
+      - name: recent_swim_totals__count
+        description: Count of swims in the last 4 weeks
+
+      - name: recent_swim_totals__distance_miles
+        description: Total distance of swims in the last 4 weeks in miles
+
+      - name: recent_swim_totals__elapsed_time_minutes
+        description: Total elapsed time of swims in the last 4 weeks in minutes
+
+      - name: recent_swim_totals__elevation_gain_feet
+        description: Total elevation gain of swims in the last 4 weeks in feet
+
+      - name: recent_swim_totals__moving_time_minutes
+        description: Total moving time of swims in the last 4 weeks in minutes
+
+      - name: ytd_ride_totals__count
+        description: Count of year-to-date rides
+
+      - name: ytd_ride_totals__distance_miles
+        description: Total distance of year-to-date rides in miles
+
+      - name: ytd_ride_totals__elapsed_time_days
+        description: Total elapsed time of year-to-date rides in days
+
+      - name: ytd_ride_totals__elevation_gain_feet
+        description: Total elevation gain of year-to-date rides in feet
+
+      - name: ytd_ride_totals__moving_time_days
+        description: Total moving time of year-to-date rides in days
+
+      - name: ytd_run_totals__count
+        description: Count of year-to-date runs
+
+      - name: ytd_run_totals__distance_miles
+        description: Total distance of year-to-date runs in miles
+
+      - name: ytd_run_totals__elapsed_time_days
+        description: Total elapsed time of year-to-date runs in days
+
+      - name: ytd_run_totals__elevation_gain_feet
+        description: Total elevation gain of year-to-date runs in feet
+
+      - name: ytd_run_totals__moving_time_days
+        description: Total moving time of year-to-date runs in days
+
+      - name: ytd_swim_totals__count
+        description: Count of year-to-date swims
+
+      - name: ytd_swim_totals__distance_miles
+        description: Total distance of year-to-date swims in miles
+
+      - name: ytd_swim_totals__elapsed_time_minutes
+        description: Total elapsed time of year-to-date swims in minutes
+
+      - name: ytd_swim_totals__elevation_gain_feet
+        description: Total elevation gain of year-to-date swims in feet
+
+      - name: ytd_swim_totals__moving_time_minutes
+        description: Total moving time of year-to-date swims in minutes

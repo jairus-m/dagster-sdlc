@@ -181,7 +181,7 @@ def evaluate_model(trained_model, test_data):
     )
 
 
-@asset
+@asset(kinds={"plotly"})
 def ml_results_scatter_plot(context: AssetExecutionContext, results_df):
     """Scatterplot of X_test and y_pred"""
     fig = go.Figure()
