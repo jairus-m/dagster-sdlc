@@ -6,7 +6,11 @@ from ..project import dbt_project
 
 from .configured_resources import StravaAPIResource
 
+from dagster_embedded_elt.dlt import DagsterDltResource
+
 PROFILES_DIR = "analytics_dbt"
+
+dlt_resource = DagsterDltResource()
 
 dbt_resource = DbtCliResource(
     project_dir=dbt_project,
