@@ -1,7 +1,7 @@
 from dagster import Definitions, load_assets_from_modules, EnvVar
 
 from .assets import dlt, dbt, ml_analytics
-from .resources import database_resource, dbt_resource, strava_api_resource
+from .resources import dlt_resource, database_resource, dbt_resource
 from .jobs import activities_update_job
 from .schedules import activities_update_schedule
 
@@ -27,7 +27,7 @@ defs = Definitions(
     resources={
         "database": database_resource[DAGSTER_ENVIRONMENT],
         "dbt": dbt_resource,
-        "strava": strava_api_resource,
+        "dlt": dlt_resource,
     },
     jobs=all_jobs,
     schedules=all_schedules,

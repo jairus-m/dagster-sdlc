@@ -1,22 +1,33 @@
+from collections.abc import Iterable
+
 from dagster import (
-    multi_asset,
     EnvVar,
-    AssetOut,
-    Output,
+    AssetKey,
     get_dagster_logger,
     AssetExecutionContext,
 )
+from dagster_embedded_elt.dlt import (
+    DagsterDltTranslator,
+    dlt_assets,
+    DagsterDltResource,
+)
 
-import dlt
-from dlt.sources.rest_api import RESTAPIConfig, rest_api_resources
+from dlt.sources.rest_api import rest_api_source
+from dlt.extract.resource import DltResource
 from dlt.sources.helpers.rest_client.paginators import SinglePagePaginator
 
 import pendulum
 
-from dagster_proj.resources import StravaAPIResource
+from dagster_proj.resources import strava_api_resource
 from dagster_proj.utils import dynamic_write_dlt
 
 logger = get_dagster_logger()
+
+DUCKDB_DATABASE_PATH = EnvVar("DUCKDB_DATABASE").get_value()
+DAGSTER_ENVIRONMENT = EnvVar("DAGSTER_ENVIRONMENT").get_value()
+
+ACCESS_TOKEN = strava_api_resource.get_access_token()
+ATHLETE_ID = strava_api_resource.athlete_id
 
 
 def strava_activities():
@@ -62,63 +73,41 @@ def strava_stats(athlete_id: int):
     }
 
 
-@dlt.source
-def strava_rest_api_config(strava_resource: StravaAPIResource):
-    logger.info("Extracting Strava data source")
-    access_token = strava_resource.get_access_token()
-    athlete_id = strava_resource.athlete_id
-
-    config: RESTAPIConfig = {
+strava_source = rest_api_source(
+    {
         "client": {
             "base_url": "https://www.strava.com/api/v3/",
             "auth": {
                 "type": "bearer",
-                "token": access_token,
+                "token": ACCESS_TOKEN,
             },
             "paginator": {"type": "page_number", "base_page": 1, "total_path": None},
         },
-        "resources": [strava_activities(), strava_stats(athlete_id)],
+        "resources": [strava_activities(), strava_stats(ATHLETE_ID)],
     }
-
-    logger.info("RESTAPIConfig set up, starting to yield resources...")
-
-    yield from rest_api_resources(config)
-
-
-@multi_asset(
-    outs={
-        "activities": AssetOut(
-            key=["strava", "activities"], description="Raw activity data from Strava."
-        ),
-        "stats": AssetOut(
-            key=["strava", "stats"], description="Summary athlete stats."
-        ),
-    },
-    group_name="dltHub",
-    required_resource_keys={"strava"},
-    compute_kind="dlt",
 )
-def load_strava_activities(context: AssetExecutionContext):
-    """
-    dlt EL pipeline based off declarative Rest API Config
-    to load raw Strava activities/athlete stats
-    """
-    DUCKDB_DATABASE_PATH = EnvVar("DUCKDB_DATABASE").get_value()
-    DAGSTER_ENVIRONMENT = EnvVar("DAGSTER_ENVIRONMENT").get_value()
 
-    logger.info(f"Dagster Env: {DAGSTER_ENVIRONMENT}")
 
-    # util function to write to DuckDB or Snowflake based on environment
-    pipeline = dynamic_write_dlt(
+class CustomDagsterDltTranslator(DagsterDltTranslator):
+    def get_asset_key(self, resource: DltResource) -> AssetKey:
+        """Overrides asset key to be the dlt resource name with a 'strava' prefix."""
+        return AssetKey(f"{resource.name}").with_prefix("strava")
+
+    def get_deps_asset_keys(self, resource: DltResource) -> Iterable[AssetKey]:
+        """Overrides upstream asset key to be a single source asset."""
+        return []
+
+
+@dlt_assets(
+    dlt_source=strava_source,
+    dlt_pipeline=dynamic_write_dlt(
         dagster_environment=DAGSTER_ENVIRONMENT,
         duckdb_database_path=DUCKDB_DATABASE_PATH,
         pipeline_name="strava_rest_api_config",
         dataset_name="strava_data",  # schema in dwh
-    )
-
-    source = strava_rest_api_config(context.resources.strava)
-    load_info = pipeline.run(source)
-    logger.info(load_info)
-
-    yield Output(value=load_info[0], output_name="activities")
-    yield Output(value=load_info[1], output_name="stats")
+    ),
+    group_name="dltHub",
+    dagster_dlt_translator=CustomDagsterDltTranslator(),
+)
+def load_strava_activities(context: AssetExecutionContext, dlt: DagsterDltResource):
+    yield from dlt.run(context=context)
