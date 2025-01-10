@@ -8,7 +8,6 @@ dependencies = [
     "dagster-webserver>=1.9.3",
     "dagster>=1.9.3",
     "dbt-duckdb>=1.9.0",
-    "dlt[duckdb,snowflake]>=1.4.0",
     "streamlit>=1.40.1",
     "dagster-duckdb>=0.25.3",
     "dagster-dbt>=0.25.3",
@@ -18,6 +17,7 @@ dependencies = [
     "dbt-snowflake>=1.8.4",
     "dagster-snowflake>=0.25.3",
     "plotly>=5.24.1",
+    "dagster-embedded-elt>=0.25.3",
 ]
 
 [project.optional-dependencies]
