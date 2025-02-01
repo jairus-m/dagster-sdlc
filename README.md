@@ -1,6 +1,6 @@
-# The Analytics Development Lifecycle within a Modern Data Engineering Framework
+# The Software Development Lifecycle within a Modern Data Engineering Framework
 
-Utilizing dltHub, dbt, + Dagster as a framework for developing data products with software engineering best practices. 
+To get a more in-depth write-up of this project, visit my [Medium](https://medium.com/@jairus-m/the-software-development-lifecycle-within-a-modern-data-engineering-framework-11c44a2f7189) page!
 
 ![Slide1](https://github.com/user-attachments/assets/4f0025b5-c203-424f-96a6-5be81f61c844)
 
