@@ -1,30 +1,31 @@
-from dagster import EnvVar
+from dagster import EnvVar, ResourceDefinition
 from dagster_duckdb import DuckDBResource
 from dagster_snowflake import SnowflakeResource
 from dagster_dbt import DbtCliResource
 from ..project import dbt_project
-
 from .configured_resources import StravaAPIResource
 
 PROFILES_DIR = "analytics_dbt"
-
 dbt_resource = DbtCliResource(
     project_dir=dbt_project,
     profiles_dir=PROFILES_DIR,
     target=EnvVar("DBT_TARGET"),
 )
-
 duckdb_resource = DuckDBResource(
     database=EnvVar("DUCKDB_DATABASE"),
 )
 
-strava_api_resource = StravaAPIResource(
-    client_id=EnvVar("CLIENT_ID").get_value(),
-    client_secret=EnvVar("CLIENT_SECRET").get_value(),
-    refresh_token=EnvVar("REFRESH_TOKEN").get_value(),
-    athlete_id=22152127,
-)
 
+def get_strava_api_resource():
+    return StravaAPIResource(
+        client_id=EnvVar("CLIENT_ID").get_value(),
+        client_secret=EnvVar("CLIENT_SECRET").get_value(),
+        refresh_token=EnvVar("REFRESH_TOKEN").get_value(),
+        athlete_id=22152127,
+    )
+
+
+strava_api_resource = ResourceDefinition.hardcoded_resource(get_strava_api_resource)
 snowflake_instance = SnowflakeResource(
     account=EnvVar("DESTINATION__SNOWFLAKE__CREDENTIALS__HOST"),
     user=EnvVar("DESTINATION__SNOWFLAKE__CREDENTIALS__USERNAME"),
@@ -33,7 +34,6 @@ snowflake_instance = SnowflakeResource(
     database=EnvVar("DESTINATION__SNOWFLAKE__CREDENTIALS__DATABASE"),
     warehouse=EnvVar("DESTINATION__SNOWFLAKE__CREDENTIALS__WAREHOUSE"),
 )
-
 # will use Dagster env to choose
 database_resource = {
     "dev": duckdb_resource,
