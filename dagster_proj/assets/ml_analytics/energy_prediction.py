@@ -77,7 +77,7 @@ def check_cycling_data_size(cycling_data):
     """Check that the cycling data has more than 1500 rows."""
     num_rows = cycling_data.shape[0]
     num_cols = cycling_data.shape[1]
-    passed = num_rows > 1500 & num_cols == 8
+    passed = num_rows > 1500 and num_cols == 8
     return AssetCheckResult(
         passed=passed, metadata={"num_rows": num_rows, "num_cols": num_cols}
     )
